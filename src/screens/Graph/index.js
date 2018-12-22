@@ -1,71 +1,75 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'semantic-ui-react';
 import NVD3Chart from 'react-nvd3';
-
+import { Dropdown, Container, Grid } from 'semantic-ui-react';
 import { getGraphDataSaga } from '../../actions';
 
-import styles from './styles';
+import 'nvd3/build/nv.d3.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import './styles.css';
 
 class Graph extends Component {
   constructor() {
     super();
     this.handleBtnOnClick = this.handleBtnOnClick.bind(this);
-    this.state = {
-      cur_target: 0
-    };
+    this.state = { cur_target: 0 };
   }
 
   componentDidMount() {
     this.handleBtnOnClick();
   }
-  handleBtnOnClick() {
-    this.props.getGraphDataSaga();
+
+  handleTargetChange = (event, data) => {
+    this.setState({ cur_target: data.value });
   }
-  handleTargetChange = (event) => {
-    this.setState({cur_target: event.target.value});
-  }
+
   formatData = () => {
     const { graphdata, targets } = this.props;
-    if(typeof graphdata.data == 'undefined') return;
-    var target = targets[this.state.cur_target];
-    var data = graphdata.data[target];
-    var values = [];
-    for(var c in data) {
-      values.push({
-        "label" : data[c][0],
-        "value" : data[c][1]
-      });
+    const { cur_target } = this.state;
+    if (typeof graphdata.data == 'undefined') return [];
+    const data = graphdata.data[targets[cur_target].text];
+    const values = [];
+    for (const c in data) {
+      if (c) {
+        values.push({
+          label: data[c][0],
+          value: data[c][1]
+        });
+      }
     }
     return values;
   }
 
+  handleBtnOnClick() {
+    const { getGraphDataFunc } = this.props;
+    getGraphDataFunc();
+  }
 
   render() {
-    
-    var datum = [{
-      key: "Cumulative Return",
+    const datum = [{
+      key: 'Cumulative Return',
       values: this.formatData()
     }];
+    const { targets } = this.props;
+    const { cur_target } = this.state;
     return (
-      <div style={styles.container}>
-        <select class="ui search dropdown" onChange={this.handleTargetChange}>
-        {this.props.targets.map((target,i) => (
-            <option value={i}>{target}</option>
-          ))
-        }
-        </select>
-        <div id="barChart">
-          <NVD3Chart type="discreteBarChart" datum={datum} x="label" y="value"/>
-        </div>
-        {/* <Button
-          color="teal"
-          onClick={this.handleBtnOnClick}
-        >
-          Load Graph
-        </Button> */}
-      </div>
+      <Container>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column>
+              <Dropdown className="float-right" placeholder="State" search selection options={targets} defaultValue={cur_target} onChange={this.handleTargetChange} />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <div id="barChart">
+                <NVD3Chart type="discreteBarChart" datum={datum} x="label" y="value" />
+              </div>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>
     );
   }
 }
@@ -76,7 +80,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getGraphDataSaga: () => dispatch(getGraphDataSaga())
+  getGraphDataFunc: () => dispatch(getGraphDataSaga())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Graph);

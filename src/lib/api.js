@@ -4,18 +4,19 @@ export async function getUsers() {
   return response.json();
 }
 export async function getGraphData() {
-  return {
-    "data": {
-      "target1": [
+  const response = {
+    data: {
+      target1: [
         [1.0, 1545.174000],
         [1.1, 154.5177600],
         [0.2, 15.45181200]
       ],
-      "target2": [
+      target2: [
         [2.11, 15451.74000],
         [1.222, 154.5177600],
         [0.1, 1545.181200]
       ]
     }
   };
+  return response;
 }

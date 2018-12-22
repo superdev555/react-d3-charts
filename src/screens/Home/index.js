@@ -13,7 +13,8 @@ class Home extends Component {
   }
 
   handleBtnOnClick() {
-    this.props.getUsersSaga();
+    const { getUsersFunc } = this.props;
+    getUsersFunc();
   }
 
   render() {
@@ -72,7 +73,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUsersSaga: () => dispatch(getUsersSaga())
+  getUsersFunc: () => dispatch(getUsersSaga())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

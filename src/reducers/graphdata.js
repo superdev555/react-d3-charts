@@ -2,15 +2,14 @@ import { SET_GRAPH_DATA } from '../constants';
 
 const initialState = { graphdata: {}, targets: [] };
 function getTargets(graphdata) {
-  var targets = [];
-  for(var target in graphdata.data) {
-    targets.push(target);
+  const targets = [];
+  let index = 0;
+  for (const key in graphdata.data) {
+    if (key) targets.push({ value: index++, text: key });
   }
-  console.log('targets=',targets)
   return targets;
 }
 export default function grahpDataReducer(state = initialState, action) {
-  console.log('action.graphdata-----',action)
   switch (action.type) {
     case SET_GRAPH_DATA:
       return {

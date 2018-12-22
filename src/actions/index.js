@@ -1,4 +1,6 @@
-import { GET_USERS_SAGA, SET_USERS, GET_GRAPH_DATA_SAGA, SET_GRAPH_DATA } from '../constants';
+import {
+  GET_USERS_SAGA, SET_USERS, GET_GRAPH_DATA_SAGA, SET_GRAPH_DATA
+} from '../constants';
 
 export function setUsers(users) {
   return {
@@ -24,5 +26,3 @@ export function getGraphDataSaga() {
     type: GET_GRAPH_DATA_SAGA
   };
 }
-
-
