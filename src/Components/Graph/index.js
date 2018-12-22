@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import NVD3Chart from 'react-nvd3';
-import { Dropdown, Container, Grid } from 'semantic-ui-react';
+import { Dropdown } from 'semantic-ui-react';
+import {
+  Container, Row, Col
+} from 'reactstrap';
 import { getGraphDataSaga } from './actions';
 
 import 'nvd3/build/nv.d3.css';
@@ -17,6 +20,14 @@ class Graph extends Component {
   }
 
   componentDidMount() {
+    this.handleBtnOnClick();
+  }
+
+  componentWillReceiveProps(props) {
+    if (this.props.minDate === props.minDate && this.props.maxDate === props.maxDate) {
+      return;
+    }
+    this.props = props;
     this.handleBtnOnClick();
   }
 
@@ -43,7 +54,9 @@ class Graph extends Component {
 
   handleBtnOnClick() {
     const { getGraphDataFunc } = this.props;
-    getGraphDataFunc();
+    const { minDate, maxDate, ApiURL } = this.props;
+    const param = { minDate, maxDate, ApiURL };
+    getGraphDataFunc(param);
   }
 
   render() {
@@ -54,21 +67,22 @@ class Graph extends Component {
     const { targets } = this.props;
     const { cur_target } = this.state;
     return (
-      <Container>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column>
-              <Dropdown className="float-right" placeholder="State" search selection options={targets} defaultValue={cur_target} onChange={this.handleTargetChange} />
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column>
-              <div id="barChart">
-                <NVD3Chart type="discreteBarChart" datum={datum} x="label" y="value" />
-              </div>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+      <Container style={{
+        paddingTop: 20, paddingBottom: 20, marginBottom: 20, backgroundColor: '#eeeeee'
+      }}
+      >
+        <Row>
+          <Col>
+            <Dropdown className="float-right" placeholder="State" search selection options={targets} defaultValue={cur_target} onChange={this.handleTargetChange} />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <div id="barChart">
+              <NVD3Chart type="discreteBarChart" datum={datum} x="label" y="value" />
+            </div>
+          </Col>
+        </Row>
       </Container>
     );
   }
@@ -80,7 +94,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getGraphDataFunc: () => dispatch(getGraphDataSaga())
+  getGraphDataFunc: param => dispatch(getGraphDataSaga(param))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Graph);

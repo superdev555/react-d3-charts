@@ -4,8 +4,9 @@ import { GET_GRAPH_DATA_SAGA } from '../../constants';
 import { setGraphData } from '../../actions';
 import { getGraphData } from '../../../../lib/api';
 
-function* workerGetGraphDataSaga() {
-  const graphdata = yield call(getGraphData);
+function* workerGetGraphDataSaga(action) {
+  const { param } = action;
+  const graphdata = yield call(getGraphData, param);
   yield put(setGraphData(graphdata));
 }
 

@@ -21,8 +21,9 @@ export function getUsersSaga() {
     type: GET_USERS_SAGA
   };
 }
-export function getGraphDataSaga() {
+export function getGraphDataSaga(param) {
   return {
-    type: GET_GRAPH_DATA_SAGA
+    type: GET_GRAPH_DATA_SAGA,
+    param
   };
 }
