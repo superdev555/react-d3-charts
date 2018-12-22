@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import NVD3Chart from 'react-nvd3';
 import { Dropdown, Container, Grid } from 'semantic-ui-react';
-import { getGraphDataSaga } from '../../actions';
+import { getGraphDataSaga } from './actions';
 
 import 'nvd3/build/nv.d3.css';
 import 'bootstrap/dist/css/bootstrap.min.css';

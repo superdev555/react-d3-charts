@@ -4,8 +4,8 @@ import createHistory from 'history/createBrowserHistory';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 
-import rootReducer from './reducers';
-import sagas from './sagas';
+import rootReducer from './Components/Graph/reducers';
+import sagas from './Components/Graph/sagas';
 
 export const history = createHistory();
 
