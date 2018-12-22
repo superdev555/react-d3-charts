@@ -7,6 +7,7 @@ import { Route } from 'react-router-dom';
 import store, { history } from './store';
 
 import Home from './screens/Home';
+import Graph from './screens/Graph';
 
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
@@ -17,7 +18,7 @@ export default class App extends Component {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <div>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={Graph} />
           </div>
         </ConnectedRouter>
       </Provider>

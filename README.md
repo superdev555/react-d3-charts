@@ -1,6 +1,4 @@
-# react-redux-saga-boilerplate
-
-[![Greenkeeper badge](https://badges.greenkeeper.io/mCodex/react-redux-saga-boilerplate.svg)](https://greenkeeper.io/)
+# React-NVD3-Graph-Application
 
 My simple starter kit which I'd love to share to the community. The project was generated from `create-react-app` and then I included a few libraries.
 
@@ -12,10 +10,6 @@ My simple starter kit which I'd love to share to the community. The project was 
 * Redux Saga
 * ESlint
 * Airbnb's ESlint rules
-
-## Live Demo
-
-https://react-redux-saga-boilerplate.herokuapp.com/
 
 ## Installation
 
