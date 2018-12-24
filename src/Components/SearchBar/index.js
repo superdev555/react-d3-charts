@@ -10,8 +10,8 @@ import 'rc-datetime-picker/dist/picker.css';
 import 'font-awesome/css/font-awesome.min.css';
 
 class SearchBar extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       smoment: moment().startOf('month'),
       emoment: moment().endOf('month')

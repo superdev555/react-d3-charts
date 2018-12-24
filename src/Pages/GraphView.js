@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import Graph from '../Components/Graph';
-import SearchBar from '../Components/SearchBar';
+import Graph from '../components/Graph';
+import SearchBar from '../components/SearchBar';
+// import CustomChart from '../components/CustomChart';
 
 class GraphView extends Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class GraphView extends Component {
       <div>
         <SearchBar onFilter={this.onFilter} />
         <Graph ApiURL="https://api.com/v1" minDate={minDate} maxDate={maxDate} />
+
       </div>
     );
   }

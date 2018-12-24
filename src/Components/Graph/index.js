@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import NVD3Chart from 'react-nvd3';
-import { Dropdown } from 'semantic-ui-react';
 import {
   Container, Row, Col
 } from 'reactstrap';
+import CustomChart from '../CustomChart';
 import { getGraphDataSaga } from './actions';
+import getFilteredGraphData from './selectors';
 
 import 'nvd3/build/nv.d3.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,59 +13,50 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 
 class Graph extends Component {
-  constructor() {
-    super();
-    this.handleBtnOnClick = this.handleBtnOnClick.bind(this);
-    this.state = { cur_target: 0 };
-  }
-
   componentDidMount() {
-    this.handleBtnOnClick();
+    this.getData();
   }
 
-  componentWillReceiveProps(props) {
-    if (this.props.minDate === props.minDate && this.props.maxDate === props.maxDate) {
-      return;
-    }
-    this.props = props;
-    this.handleBtnOnClick();
-  }
-
-  handleTargetChange = (event, data) => {
-    this.setState({ cur_target: data.value });
-  }
-
-  formatData = () => {
-    const { graphdata, targets } = this.props;
-    const { cur_target } = this.state;
-    if (typeof graphdata.data == 'undefined') return [];
-    const data = graphdata.data[targets[cur_target].text];
-    const values = [];
-    for (const c in data) {
-      if (c) {
-        values.push({
-          label: data[c][0],
-          value: data[c][1]
-        });
-      }
-    }
-    return values;
-  }
-
-  handleBtnOnClick() {
+  getData() {
     const { getGraphDataFunc } = this.props;
-    const { minDate, maxDate, ApiURL } = this.props;
-    const param = { minDate, maxDate, ApiURL };
+    const { ApiURL } = this.props;
+    const param = { ApiURL };
     getGraphDataFunc(param);
   }
 
+  formatData = () => {
+    const { filteredGraphData } = this.props;
+    if (typeof filteredGraphData == 'undefined') return {};
+    const ret = [];
+    const colors = ['#98df8a', '#ffbb78', '#ff9896', '#1f77b4'];
+
+
+    Object.keys(filteredGraphData).forEach((target, i) => {
+      const data = filteredGraphData[target];
+      console.log('len=', data.length);
+      if (data.length > 0) {
+        const values = [];
+        for (const c in data) {
+          if (c) {
+            values.push({
+              x: data[c][0],
+              y: data[c][1]
+            });
+          }
+        }
+        console.log(values, values.length);
+
+        const newobject = { key: target, values, color: colors[i] };
+        ret.push(newobject);
+      }
+    });
+    console.log(ret);
+
+    return ret;
+  }
+
   render() {
-    const datum = [{
-      key: 'Cumulative Return',
-      values: this.formatData()
-    }];
-    const { targets } = this.props;
-    const { cur_target } = this.state;
+    const datum = this.formatData();
     return (
       <Container style={{
         paddingTop: 20, paddingBottom: 20, marginBottom: 20, backgroundColor: '#eeeeee'
@@ -73,13 +64,8 @@ class Graph extends Component {
       >
         <Row>
           <Col>
-            <Dropdown className="float-right" placeholder="State" search selection options={targets} defaultValue={cur_target} onChange={this.handleTargetChange} />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
             <div id="barChart">
-              <NVD3Chart type="discreteBarChart" datum={datum} x="label" y="value" />
+              <CustomChart datum={datum} />
             </div>
           </Col>
         </Row>
@@ -87,10 +73,8 @@ class Graph extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  graphdata: state.graphDataReducer.graphdata,
-  targets: state.graphDataReducer.targets,
+const mapStateToProps = (state, props) => ({
+  filteredGraphData: getFilteredGraphData(state, props),
 });
 
 const mapDispatchToProps = dispatch => ({

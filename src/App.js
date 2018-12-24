@@ -6,7 +6,7 @@ import { Route } from 'react-router-dom';
 
 import store, { history } from './store';
 
-import Graph from './Pages/GraphView';
+import GraphView from './pages/GraphView';
 
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
@@ -17,7 +17,7 @@ export default class App extends Component {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <div>
-            <Route exact path="/" component={Graph} />
+            <Route exact path="/" component={GraphView} />
           </div>
         </ConnectedRouter>
       </Provider>

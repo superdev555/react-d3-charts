@@ -2,7 +2,7 @@ import { put, takeLatest, call } from 'redux-saga/effects';
 
 import { GET_GRAPH_DATA_SAGA } from '../../constants';
 import { setGraphData } from '../../actions';
-import { getGraphData } from '../../../../lib/api';
+import getGraphData from '../../api';
 
 function* workerGetGraphDataSaga(action) {
   const { param } = action;
