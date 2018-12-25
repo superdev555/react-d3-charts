@@ -8,7 +8,6 @@ import store, { history } from './store';
 
 import GraphView from './pages/GraphView';
 
-import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 
 export default class App extends Component {

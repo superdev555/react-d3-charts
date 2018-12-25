@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NVD3Chart from 'react-nvd3';
 import * as d3 from 'd3';
 import nv from 'nvd3';
+import styled from 'styled-components';
 
 class CustomChart extends Component {
   componentDidMount() {
@@ -17,14 +18,13 @@ class CustomChart extends Component {
       chart.showControls(true); //Allow user to switch between 'Grouped' and 'Stacked' mode.
       chart.groupSpacing(0.1); //Distance between each group of bars.
 
-
       chart.xAxis
         .tickFormat(d3.format(',d'));
 
       chart.yAxis
         .tickFormat(d3.format(',.1f'));
 
-      d3.select('#chart svg')
+      d3.select('#customChart svg')
         .datum(that.props.datum)
         .call(chart);
 
@@ -33,9 +33,13 @@ class CustomChart extends Component {
       return chart;
     });
 
+    const StyledSvg = styled('svg')`
+      height: ${props => props.height};
+    `;
+    const { svgHeight } = this.props;
     return (
-      <div id="chart">
-        <svg />
+      <div id="customChart">
+        <StyledSvg height={svgHeight} />
       </div>
     );
   }

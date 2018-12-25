@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 import Graph from '../components/Graph';
 import SearchBar from '../components/SearchBar';
-// import CustomChart from '../components/CustomChart';
+
+const startOfMonth = require('date-fns/start_of_month');
+const endOfMonth = require('date-fns/end_of_month');
+const format = require('date-fns/format');
 
 class GraphView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      minDate: moment().startOf('month').format('YYYY-MM-DD HH:mm'),
-      maxDate: moment().endOf('month').format('YYYY-MM-DD HH:mm')
+      minDate: format(startOfMonth(new Date()), 'YYYY-MM-DD HH:mm'),
+      maxDate: format(endOfMonth(new Date()), 'YYYY-MM-DD HH:mm')
     };
   }
 
@@ -18,12 +20,12 @@ class GraphView extends Component {
   };
 
   render() {
+    //
     const { minDate, maxDate } = this.state;
     return (
       <div>
         <SearchBar onFilter={this.onFilter} />
         <Graph ApiURL="https://api.com/v1" minDate={minDate} maxDate={maxDate} />
-
       </div>
     );
   }

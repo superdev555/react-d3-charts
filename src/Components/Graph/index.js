@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  Container, Row, Col
-} from 'reactstrap';
+
+import Grid from 'react-bootstrap/lib/Grid';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
+import styled from 'styled-components';
+
 import CustomChart from '../CustomChart';
 import { getGraphDataSaga } from './actions';
 import getFilteredGraphData from './selectors';
 
 import 'nvd3/build/nv.d3.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-import './styles.css';
+import 'bootstrap3/dist/css/bootstrap.min.css';
 
 class Graph extends Component {
   componentDidMount() {
@@ -30,10 +31,8 @@ class Graph extends Component {
     const ret = [];
     const colors = ['#98df8a', '#ffbb78', '#ff9896', '#1f77b4'];
 
-
     Object.keys(filteredGraphData).forEach((target, i) => {
       const data = filteredGraphData[target];
-      console.log('len=', data.length);
       if (data.length > 0) {
         const values = [];
         for (const c in data) {
@@ -44,32 +43,31 @@ class Graph extends Component {
             });
           }
         }
-        console.log(values, values.length);
-
         const newobject = { key: target, values, color: colors[i] };
         ret.push(newobject);
       }
     });
-    console.log(ret);
 
     return ret;
   }
 
   render() {
     const datum = this.formatData();
+    const StyledGrid = styled(Grid)`
+      padding: 20px;
+      background-color: #eeeeee;
+    `;
     return (
-      <Container style={{
-        paddingTop: 20, paddingBottom: 20, marginBottom: 20, backgroundColor: '#eeeeee'
-      }}
-      >
+
+      <StyledGrid>
         <Row>
-          <Col>
-            <div id="barChart">
-              <CustomChart datum={datum} />
+          <Col xs={12} md={12}>
+            <div>
+              <CustomChart datum={datum} svgHeight="400px" />
             </div>
           </Col>
         </Row>
-      </Container>
+      </StyledGrid>
     );
   }
 }

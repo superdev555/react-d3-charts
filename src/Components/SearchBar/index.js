@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
-import moment from 'moment';
-import {
-  Container, Row, Col, Button, Input
-} from 'reactstrap';
-import { DatetimePickerTrigger } from 'rc-datetime-picker';
+import Grid from 'react-bootstrap/lib/Grid';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
+import Button from 'react-bootstrap/lib/Button';
+import styled from 'styled-components';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'rc-datetime-picker/dist/picker.css';
-import 'font-awesome/css/font-awesome.min.css';
+const DatePicker = require('react-16-bootstrap-date-picker');
+
+const startOfMonth = require('date-fns/start_of_month');
+const endOfMonth = require('date-fns/end_of_month');
+const format = require('date-fns/format');
+
 
 class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      smoment: moment().startOf('month'),
-      emoment: moment().endOf('month')
+      smoment: startOfMonth(new Date()),
+      emoment: endOfMonth(new Date()),
     };
   }
 
@@ -32,38 +35,34 @@ class SearchBar extends Component {
       alert('Start date must be less than end date.');
     } else {
       const { onFilter } = this.props;
-      onFilter(smoment.format('YYYY-MM-DD HH:mm'), emoment.format('YYYY-MM-DD HH:mm'));
+      onFilter(format(smoment, 'YYYY-MM-DD'), format(emoment, 'YYYY-MM-DD'));
     }
   }
 
   render() {
-    const shortcuts = {
-      Today: moment(),
-      Yesterday: moment().subtract(1, 'days'),
-    };
-    const { smoment, emoment } = this.state;
+    const {
+      smoment, emoment
+    } = this.state;
+    const StyledGrid = styled(Grid)`
+      background-color: #eeeeff;
+      padding: 20px;
+      margin-bottom: 10px;
+    `;
+
     return (
-      <Container>
-        <Row style={{
-          paddingTop: 20, paddingBottom: 20, marginBottom: 20, backgroundColor: '#eeeeff'
-        }}
-        >
-          <Col md="auto">
-            <DatetimePickerTrigger shortcuts={shortcuts} moment={smoment} onChange={this.handleStartChange}>
-              <Input type="text" value={smoment.format('YYYY-MM-DD HH:mm')} readOnly />
-            </DatetimePickerTrigger>
+      <StyledGrid>
+        <Row>
+          <Col md={3} xs={8}>
+            <DatePicker id="start-datepicker" value={format(smoment, 'YYYY-MM-DD HH:mm')} onChange={this.handleStartChange} showClearButton={false} />
           </Col>
-          -
-          <Col md="auto">
-            <DatetimePickerTrigger shortcuts={shortcuts} moment={emoment} onChange={this.handleEndChange}>
-              <Input type="text" value={emoment.format('YYYY-MM-DD HH:mm')} readOnly />
-            </DatetimePickerTrigger>
+          <Col md={3} xs={8}>
+            <DatePicker id="end-datepicker" value={format(emoment, 'YYYY-MM-DD HH:mm')} onChange={this.handleEndChange} showClearButton={false} />
           </Col>
-          <Col md="auto">
-            <Button onClick={this.onFilter}>Filter</Button>
+          <Col md={3} xs={3}>
+            <Button bsStyle="info" onClick={this.onFilter}>Filter</Button>
           </Col>
         </Row>
-      </Container>
+      </StyledGrid>
     );
   }
 }
