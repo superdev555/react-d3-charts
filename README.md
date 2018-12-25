@@ -5,9 +5,9 @@ My simple starter kit which I'd love to share to the community. The project was 
 ## Features Out-Of-The-Box
 
 * React-Router 4
-* Semantic Ui
 * Redux
 * Redux Saga
+* Styled-Components
 * ESlint
 * Airbnb's ESlint rules
 

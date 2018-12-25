@@ -29,7 +29,7 @@ class Graph extends Component {
     const { filteredGraphData } = this.props;
     if (typeof filteredGraphData == 'undefined') return {};
     const ret = [];
-    const colors = ['#98df8a', '#ffbb78', '#ff9896', '#1f77b4'];
+    const colors = ['#ff9896', '#1f77b4', '#98df8a', '#ffbb78'];
 
     Object.keys(filteredGraphData).forEach((target, i) => {
       const data = filteredGraphData[target];
@@ -43,7 +43,9 @@ class Graph extends Component {
             });
           }
         }
-        const newobject = { key: target, values, color: colors[i] };
+        const newobject = {
+          key: target, values, color: colors[i], area: true
+        };
         ret.push(newobject);
       }
     });
@@ -57,13 +59,14 @@ class Graph extends Component {
       padding: 20px;
       background-color: #eeeeee;
     `;
+    const { type } = this.props;
     return (
 
       <StyledGrid>
         <Row>
           <Col xs={12} md={12}>
             <div>
-              <CustomChart datum={datum} svgHeight="400px" />
+              <CustomChart type={type} datum={datum} svgHeight="400px" />
             </div>
           </Col>
         </Row>

@@ -1,5 +1,5 @@
 {
-  "name": "react-redux-saga-boilerplate",
+  "name": "react-nvd3-graph-application",
   "version": "0.1.0",
   "private": false,
   "license": "MIT",
@@ -23,6 +23,7 @@
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^5.0.0-alpha.9",
     "react-scripts": "2.1.0",
+    "react-select": "^2.1.2",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.5",
     "redux-logger": "^3.0.6",
@@ -43,9 +44,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "peerDependencies": {
-    "create-react-class": "15.6.2"
   },
   "browserslist": [
     ">0.2%",

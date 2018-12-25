@@ -3,6 +3,7 @@ import NVD3Chart from 'react-nvd3';
 import * as d3 from 'd3';
 import nv from 'nvd3';
 import styled from 'styled-components';
+import { GRAPH_TYPE_LINE_CHART, GRAPH_TYPE_BAR_CHART } from '../Graph/constants';
 
 class CustomChart extends Component {
   componentDidMount() {
@@ -11,18 +12,30 @@ class CustomChart extends Component {
   render() {
     const that = this;
     nv.addGraph(() => {
-      const chart = nv.models.multiBarChart();
-      // chart.transitionDuration(350);
-      chart.reduceXTicks(true); //If 'false', every single x-axis tick label will be rendered.
-      chart.rotateLabels(0); //Angle to rotate x-axis labels.
-      chart.showControls(true); //Allow user to switch between 'Grouped' and 'Stacked' mode.
-      chart.groupSpacing(0.1); //Distance between each group of bars.
+      let chart;
+      const { type } = this.props;
+      if (type === GRAPH_TYPE_BAR_CHART) {
+        chart = nv.models.multiBarChart();
+        chart.reduceXTicks(true); //If 'false', every single x-axis tick label will be rendered.
+        chart.rotateLabels(0); //Angle to rotate x-axis labels.
+        chart.showControls(true); //Allow user to switch between 'Grouped' and 'Stacked' mode.
+        chart.groupSpacing(0.1); //Distance between each group of bars.
+      } else if (type === GRAPH_TYPE_LINE_CHART) {
+        chart = nv.models.lineChart();
+        chart.margin({ left: 100 }); //Adjust chart margins to give the x-axis some breathing room.
+        chart.useInteractiveGuideline(true); //We want nice looking tooltips and a guideline!
+        chart.showLegend(true); //Show the legend, allowing users to turn on/off line series.
+        chart.showYAxis(true); //Show the y-axis
+        chart.showXAxis(true); //Show the x-axis
+      }
 
       chart.xAxis
-        .tickFormat(d3.format(',d'));
+        // .axisLabel('Time (ms)')
+        .tickFormat(d3.format(',.2r'));
 
       chart.yAxis
-        .tickFormat(d3.format(',.1f'));
+        // .axisLabel('Voltage (v)')
+        .tickFormat(d3.format('.02f'));
 
       d3.select('#customChart svg')
         .datum(that.props.datum)
