@@ -30,7 +30,7 @@ class GraphView extends Component {
     return (
       <div>
         <SearchBar onFilter={this.onFilter} onTypeChange={this.onTypeChange} />
-        <Graph type={type} ApiURL="https://api.com/v1" minDate={minDate} maxDate={maxDate} />
+        <Graph type={type} ApiURL="database.json" minDate={minDate} maxDate={maxDate} />
       </div>
     );
   }

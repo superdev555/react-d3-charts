@@ -53,7 +53,7 @@ class SearchBar extends Component {
       smoment, emoment
     } = this.state;
     const StyledGrid = styled(Grid)`
-      background-color: #f9b6d2;
+      background-color: #eeeeff;
       padding: 20px;
       margin-bottom: 10px;
     `;
@@ -72,7 +72,7 @@ class SearchBar extends Component {
             <DatePicker id="end-datepicker" value={format(emoment, 'YYYY-MM-DD HH:mm')} onChange={this.handleEndChange} showClearButton={false} />
           </Col>
           <Col md={3} xs={3}>
-            <Button bsStyle="danger" onClick={this.onFilter}>Filter</Button>
+            <Button bsStyle="info" onClick={this.onFilter}>Filter</Button>
           </Col>
         </Row>
       </StyledGrid>

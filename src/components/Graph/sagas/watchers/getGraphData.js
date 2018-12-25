@@ -6,8 +6,13 @@ import getGraphData from '../../api';
 
 function* workerGetGraphDataSaga(action) {
   const { param } = action;
-  const graphdata = yield call(getGraphData, param);
-  yield put(setGraphData(graphdata));
+  const response = yield call(getGraphData, param);
+  console.log(response);
+  if (response.type === 'FETCH_GRAPHDATA_SUCCESSED') {
+    yield put(setGraphData(response.payload));
+  } else if (response.type === 'FETCH_GRAPHDATA_REJECTED') {
+    console.log(response.payload);
+  }
 }
 
 export default function* watchGetGraphDataSaga() {

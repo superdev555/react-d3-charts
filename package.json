@@ -4,6 +4,7 @@
   "private": false,
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.18.0",
     "bootstrap3": "^3.3.5",
     "connected-react-router": "^4.5.0",
     "create-react-class": "^15.6.3",
