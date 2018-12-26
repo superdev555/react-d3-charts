@@ -29,18 +29,21 @@ class Graph extends Component {
     this.setState({ loading: true });
     getGraphData(param)
       .then((response) => {
-        this.setState({ graphData: response.data, loading: false });
+        const graphData = response.data;
+        const { getTargets } = this.props;
+        getTargets(Object.keys(graphData.data));
+
+        this.setState({ graphData, loading: false });
       })
       .catch((err) => {
         this.setState({ graphData: {}, loading: false, errorMsg: err });
       });
   }
 
-  formatData = () => {
-    //const { filteredGraphData } = this.props;
+  formatData = (targets) => {
     const { graphData } = this.state;
     if (graphData.length === 0) return {};
-    const filteredGraphData = getFilteredGraphData(this.state, this.props);
+    const filteredGraphData = getFilteredGraphData(this.state, this.props, targets);
     if (typeof filteredGraphData == 'undefined') return {};
     const ret = [];
     const colors = ['#ff533d', '#52004b', '#80ff00', '#ffd43d'];
@@ -58,26 +61,26 @@ class Graph extends Component {
           }
         }
         const newobject = {
-          key: target, values, color: colors[i], area: true
+          key: target, values, color: colors[i]
         };
         ret.push(newobject);
       }
     });
-
     return ret;
   }
 
   render() {
-    const datum = this.formatData();
+    const { targets, graphHeight } = this.props;
+    const datum = this.formatData(targets);
 
     const { type } = this.props;
     const { loading } = this.state;
     const StyledDivGraphNew = { ...StyledDivGraph };
-    return (loading) ? (<div>loading...</div>) : (
+    return (loading) ? (<div>Loading...</div>) : (
       <StyledDivGraphNew>
         <Row>
           <Col xs={12} md={12}>
-            <CustomChart type={type} datum={datum} svgHeight="400px" />
+            <CustomChart type={type} datum={datum} svgHeight={graphHeight} />
           </Col>
         </Row>
       </StyledDivGraphNew>

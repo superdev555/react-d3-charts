@@ -16,6 +16,7 @@
     "react": "^16.5.2",
     "react-16-bootstrap-date-picker": "^5.1.2",
     "react-bootstrap": "^0.32.4",
+    "react-checkbox-group": "^4.0.1",
     "react-dom": "^16.5.2",
     "react-helmet": "^5.2.0",
     "react-nvd3": "^0.5.7",

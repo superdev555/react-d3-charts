@@ -14,7 +14,9 @@ class View extends Component {
     this.state = {
       minDate: format(startOfMonth(new Date()), 'YYYY-MM-DD HH:mm'),
       maxDate: format(endOfMonth(new Date()), 'YYYY-MM-DD HH:mm'),
-      type: GRAPH_TYPE_LINE_CHART
+      type: GRAPH_TYPE_LINE_CHART,
+      targets: [],
+      dispTargets: []
     };
   }
 
@@ -22,19 +24,29 @@ class View extends Component {
     this.setState({ minDate, maxDate });
   };
 
+  getTargets = (dispTargets) => {
+    this.setState({ dispTargets });
+  };
+
+  setTargets = (targets) => {
+    this.setState({ targets });
+  };
+
   onTypeChange = (type) => {
     this.setState({ type });
   };
 
   render() {
-    const { minDate, maxDate, type } = this.state;
+    const {
+      minDate, maxDate, type, targets, dispTargets
+    } = this.state;
     return (
       <div>
         <StyledDivNav>
-          <SearchBar onFilter={this.onFilter} onTypeChange={this.onTypeChange} />
+          <SearchBar onFilter={this.onFilter} onTypeChange={this.onTypeChange} setTargets={this.setTargets} dispTargets={dispTargets} />
         </StyledDivNav>
         <StyledDivGraph>
-          <Graph type={type} ApiURL="database.json" minDate={minDate} maxDate={maxDate} />
+          <Graph type={type} ApiURL="database.json" minDate={minDate} maxDate={maxDate} targets={targets} getTargets={this.getTargets} graphHeight="400px" />
         </StyledDivGraph>
       </div>
 

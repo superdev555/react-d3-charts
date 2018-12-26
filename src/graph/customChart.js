@@ -6,11 +6,9 @@ import { StyledSvg } from '../styledComponents';
 import { GRAPH_TYPE_LINE_CHART, GRAPH_TYPE_BAR_CHART } from './constants';
 
 const CustomChart = (props) => {
-  console.log('CustomChart');
   nv.addGraph(() => {
-    let chart;
+    let chart = {};
     const { type } = props;
-    console.log('addGraph', type);
     if (type === GRAPH_TYPE_BAR_CHART) {
       chart = nv.models.multiBarChart();
       chart.reduceXTicks(true);
@@ -27,19 +25,14 @@ const CustomChart = (props) => {
     }
 
     chart.xAxis
-    // .axisLabel('Time (ms)')
       .tickFormat(d3.format(',.2r'));
 
     chart.yAxis
-    // .axisLabel('Voltage (v)')
       .tickFormat(d3.format('.02f'));
-
-    d3.selectAll('svg > *').remove();
 
     d3.select('#customChart > svg')
       .datum(props.datum)
       .call(chart);
-    console.log(props.datum);
     nv.utils.windowResize(chart.update);
 
     return chart;
