@@ -15,7 +15,7 @@ const StyledDivNav = styled.div`
   `;
 const StyledDivGraph = styled.div`
   padding: 20px;
-  background-color: #eeeeee;
+  background-color: #eeeee;
   margin-top: 10px;
 `;
 

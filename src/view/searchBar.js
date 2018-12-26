@@ -3,7 +3,6 @@ import {
   Grid, Row, Col, Button
 } from 'react-bootstrap';
 import Select from 'react-select';
-import styled from 'styled-components';
 import { GRAPH_TYPE_LINE_CHART, GRAPH_TYPE_BAR_CHART } from '../graph/constants';
 
 const DatePicker = require('react-16-bootstrap-date-picker');

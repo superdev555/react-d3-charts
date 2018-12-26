@@ -2,18 +2,18 @@ import { createSelector } from 'reselect';
 
 const getMinDate = (state, props) => props.minDate;
 const getMaxDate = (state, props) => props.maxDate;
-const getGraphData = state => state.graphDataReducer.graphdata;
+const getGraphData = state => state.graphData;
 
-const getVisibleGraphData = createSelector(
+const getFilteredGraphData = createSelector(
   [getMinDate, getMaxDate, getGraphData],
-  (minDate, maxDate, graphdata) => {
+  (minDate, maxDate, graphData) => {
     const nGraphData = {};
-    for (const c in graphdata.data) {
+    for (const c in graphData.data) {
       if (c) {
-        nGraphData[c] = graphdata.data[c].filter(val => (val[2] >= minDate && val[2] <= maxDate));
+        nGraphData[c] = graphData.data[c].filter(val => (val[2] >= minDate && val[2] <= maxDate));
       }
     }
     return nGraphData;
   }
 );
-export default getVisibleGraphData;
+export default getFilteredGraphData;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import NVD3Chart from 'react-nvd3';
 import * as d3 from 'd3';
 import nv from 'nvd3';

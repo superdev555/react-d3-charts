@@ -1,30 +1,46 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import { Row, Col } from 'react-bootstrap';
-import styled from 'styled-components';
 import CustomChart from './customChart';
-import { getGraphDataSaga } from './actions';
 import getFilteredGraphData from './selectors';
+import getGraphData from './api';
 import { StyledDivGraph } from '../styledComponents';
 
 import 'nvd3/build/nv.d3.css';
 import 'bootstrap3/dist/css/bootstrap.min.css';
 
 class Graph extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+      graphData: {},
+      errorMsg: ''
+    };
+  }
+
   componentDidMount() {
     this.getData();
   }
 
   getData() {
-    const { getGraphDataFunc } = this.props;
     const { ApiURL } = this.props;
     const param = { ApiURL };
-    getGraphDataFunc(param);
+    this.setState({ loading: true });
+    getGraphData(param)
+      .then((response) => {
+        this.setState({ graphData: response.data, loading: false });
+      })
+      .catch((err) => {
+        this.setState({ graphData: {}, loading: false, errorMsg: err });
+      });
   }
 
   formatData = () => {
-    const { filteredGraphData } = this.props;
+    //const { filteredGraphData } = this.props;
+    const { graphData } = this.state;
+    if (graphData.length === 0) return {};
+    const filteredGraphData = getFilteredGraphData(this.state, this.props);
     if (typeof filteredGraphData == 'undefined') return {};
     const ret = [];
     const colors = ['#ff533d', '#52004b', '#80ff00', '#ffd43d'];
@@ -55,8 +71,9 @@ class Graph extends Component {
     const datum = this.formatData();
 
     const { type } = this.props;
+    const { loading } = this.state;
     const StyledDivGraphNew = { ...StyledDivGraph };
-    return (
+    return (loading) ? (<div>loading...</div>) : (
       <StyledDivGraphNew>
         <Row>
           <Col xs={12} md={12}>
@@ -67,12 +84,5 @@ class Graph extends Component {
     );
   }
 }
-const mapStateToProps = (state, props) => ({
-  filteredGraphData: getFilteredGraphData(state, props),
-});
 
-const mapDispatchToProps = dispatch => ({
-  getGraphDataFunc: param => dispatch(getGraphDataSaga(param))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Graph);
+export default (Graph);
