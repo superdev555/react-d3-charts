@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import graphDataReducer from './graphdata';
+import graphDataReducer from './graphData';
 
 export default combineReducers({
   graphDataReducer

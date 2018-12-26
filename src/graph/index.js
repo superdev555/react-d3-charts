@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
+import { Row, Col } from 'react-bootstrap';
 import styled from 'styled-components';
-
-import CustomChart from '../CustomChart';
+import CustomChart from './customChart';
 import { getGraphDataSaga } from './actions';
 import getFilteredGraphData from './selectors';
+import { StyledDivGraph } from '../styledComponents';
 
 import 'nvd3/build/nv.d3.css';
 import 'bootstrap3/dist/css/bootstrap.min.css';
@@ -55,22 +53,17 @@ class Graph extends Component {
 
   render() {
     const datum = this.formatData();
-    const StyledGrid = styled(Grid)`
-      padding: 20px;
-      background-color: #efb1a0;
-    `;
-    const { type } = this.props;
-    return (
 
-      <StyledGrid>
+    const { type } = this.props;
+    const StyledDivGraphNew = { ...StyledDivGraph };
+    return (
+      <StyledDivGraphNew>
         <Row>
           <Col xs={12} md={12}>
-            <div>
-              <CustomChart type={type} datum={datum} svgHeight="400px" />
-            </div>
+            <CustomChart type={type} datum={datum} svgHeight="400px" />
           </Col>
         </Row>
-      </StyledGrid>
+      </StyledDivGraphNew>
     );
   }
 }

@@ -5,8 +5,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import logger from 'redux-logger';
 
-import rootReducer from './components/Graph/reducers';
-import sagas from './components/Graph/sagas';
+import rootReducer from './graph/reducers';
+import sagas from './graph/sagas';
 
 export const history = createHistory();
 

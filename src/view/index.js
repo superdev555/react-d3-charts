@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import Graph from '../components/Graph';
-import SearchBar from '../components/SearchBar';
-import { GRAPH_TYPE_LINE_CHART } from '../components/Graph/constants';
+import Graph from '../graph';
+import SearchBar from './searchBar';
+import { GRAPH_TYPE_LINE_CHART } from '../graph/constants';
+import { StyledDivNav, StyledDivGraph } from '../styledComponents';
 
 const startOfMonth = require('date-fns/start_of_month');
 const endOfMonth = require('date-fns/end_of_month');
 const format = require('date-fns/format');
 
-class GraphView extends Component {
+class View extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,8 +18,8 @@ class GraphView extends Component {
     };
   }
 
-  onFilter = (smoment, tmoment) => {
-    this.setState({ minDate: smoment, maxDate: tmoment });
+  onFilter = (minDate, maxDate) => {
+    this.setState({ minDate, maxDate });
   };
 
   onTypeChange = (type) => {
@@ -29,11 +30,16 @@ class GraphView extends Component {
     const { minDate, maxDate, type } = this.state;
     return (
       <div>
-        <SearchBar onFilter={this.onFilter} onTypeChange={this.onTypeChange} />
-        <Graph type={type} ApiURL="database.json" minDate={minDate} maxDate={maxDate} />
+        <StyledDivNav>
+          <SearchBar onFilter={this.onFilter} onTypeChange={this.onTypeChange} />
+        </StyledDivNav>
+        <StyledDivGraph>
+          <Graph type={type} ApiURL="database.json" minDate={minDate} maxDate={maxDate} />
+        </StyledDivGraph>
       </div>
+
     );
   }
 }
 
-export default GraphView;
+export default View;

@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 import Select from 'react-select';
 import styled from 'styled-components';
-import { GRAPH_TYPE_LINE_CHART, GRAPH_TYPE_BAR_CHART } from '../Graph/constants';
+import { GRAPH_TYPE_LINE_CHART, GRAPH_TYPE_BAR_CHART } from '../graph/constants';
 
 const DatePicker = require('react-16-bootstrap-date-picker');
 
@@ -18,27 +18,27 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      smoment: startOfMonth(new Date()),
-      emoment: endOfMonth(new Date()),
+      minDate: startOfMonth(new Date()),
+      maxDate: endOfMonth(new Date()),
       selectedOption: options[0],
     };
   }
 
   handleStartChange = (mmt) => {
-    this.setState({ smoment: mmt });
+    this.setState({ minDate: mmt });
   }
 
   handleEndChange = (mmt) => {
-    this.setState({ emoment: mmt });
+    this.setState({ maxDate: mmt });
   }
 
   onFilter = () => {
-    const { smoment, emoment } = this.state;
-    if (smoment > emoment) {
+    const { minDate, maxDate } = this.state;
+    if (minDate > maxDate) {
       alert('Start date must be less than end date.');
     } else {
       const { onFilter } = this.props;
-      onFilter(format(smoment, 'YYYY-MM-DD'), format(emoment, 'YYYY-MM-DD'));
+      onFilter(format(minDate, 'YYYY-MM-DD'), format(maxDate, 'YYYY-MM-DD'));
     }
   }
 
@@ -50,32 +50,28 @@ class SearchBar extends Component {
 
   render() {
     const {
-      smoment, emoment
+      minDate, maxDate
     } = this.state;
-    const StyledGrid = styled(Grid)`
-      background-color: #eeeeff;
-      padding: 20px;
-      margin-bottom: 10px;
-    `;
+
     const { selectedOption } = this.state;
 
     return (
-      <StyledGrid>
+      <Grid>
         <Row>
           <Col md={3} xs={10}>
             <Select value={selectedOption} options={options} onChange={this.handleTypeChange} />
           </Col>
           <Col md={2} xs={5}>
-            <DatePicker id="start-datepicker" value={format(smoment, 'YYYY-MM-DD HH:mm')} onChange={this.handleStartChange} showClearButton={false} />
+            <DatePicker id="start-datepicker" value={format(minDate, 'YYYY-MM-DD HH:mm')} onChange={this.handleStartChange} showClearButton={false} />
           </Col>
           <Col md={2} md-offset={1} xs={5}>
-            <DatePicker id="end-datepicker" value={format(emoment, 'YYYY-MM-DD HH:mm')} onChange={this.handleEndChange} showClearButton={false} />
+            <DatePicker id="end-datepicker" value={format(maxDate, 'YYYY-MM-DD HH:mm')} onChange={this.handleEndChange} showClearButton={false} />
           </Col>
           <Col md={3} xs={3}>
             <Button bsStyle="info" onClick={this.onFilter}>Filter</Button>
           </Col>
         </Row>
-      </StyledGrid>
+      </Grid>
     );
   }
 }
