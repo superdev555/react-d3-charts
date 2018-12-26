@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Grid, Row } from 'react-bootstrap';
-import { Checkbox } from 'react-checkbox-group';
 
 const StyledSvg = styled.svg`
     height: ${props => props.height};

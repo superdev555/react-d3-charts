@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import registerServiceWorker from './registerServiceWorker';
+//import registerServiceWorker from './registerServiceWorker';
 
 import View from './view';
 
@@ -12,4 +12,4 @@ render(
   rootElement
 );
 
-registerServiceWorker();
+//registerServiceWorker();
