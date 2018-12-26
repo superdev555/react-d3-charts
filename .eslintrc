@@ -14,7 +14,6 @@
     "comma-dangle": 0,
     "spaced-comment": 0,
     "new-cap": [2, { "capIsNewExceptions": ["Map"] }],
-    "max-len": 0,
     "no-restricted-syntax": 0,
     "no-console": 0,
     "no-loop-func": 0,

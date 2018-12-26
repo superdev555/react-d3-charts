@@ -1,10 +1,10 @@
 import React from 'react';
 import * as d3 from 'd3';
 import nv from 'nvd3';
-import { StyledSvg } from '../styledComponents';
+import { StyledSvg } from './styled';
 import { GRAPH_TYPE_LINE_CHART, GRAPH_TYPE_BAR_CHART } from './constants';
 
-const CustomChart = (props) => {
+const Chart = (props) => {
   nv.addGraph(() => {
     let chart = {};
     const { type } = props;
@@ -37,11 +37,11 @@ const CustomChart = (props) => {
     return chart;
   });
 
-  const { svgHeight } = props;
+  const { height } = props;
   return (
     <div id="customChart">
-      <StyledSvg height={svgHeight} />
+      <StyledSvg height={height} />
     </div>
   );
 };
-export default CustomChart;
+export default Chart;

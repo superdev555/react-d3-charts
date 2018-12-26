@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 
-import { Row, Col } from 'react-bootstrap';
-import CustomChart from './customChart';
+import Chart from './chart';
 import getFilteredGraphData from './selectors';
 import getGraphData from './api';
-import { StyledDivGraph } from '../styledComponents';
+import { StyledDivGraph } from './styled';
 
 import 'nvd3/build/nv.d3.css';
 import 'bootstrap3/dist/css/bootstrap.min.css';
@@ -15,7 +14,7 @@ class Graph extends Component {
     this.state = {
       loading: false,
       graphData: {},
-      errorMsg: ''
+      error: ''
     };
   }
 
@@ -24,20 +23,20 @@ class Graph extends Component {
   }
 
   getData() {
-    const { ApiURL } = this.props;
-    const param = { ApiURL };
-    this.setState({ loading: true });
-    getGraphData(param)
-      .then((response) => {
-        const graphData = response.data;
-        const { getTargets } = this.props;
-        getTargets(Object.keys(graphData.data));
-
-        this.setState({ graphData, loading: false });
-      })
-      .catch((err) => {
-        this.setState({ graphData: {}, loading: false, errorMsg: err });
-      });
+    const { apiUrl } = this.props;
+    this.setState(
+      { loading: true },
+      () => getGraphData({ apiUrl })
+        .then((response) => {
+          const graphData = response.data;
+          const { getTargets } = this.props;
+          getTargets(Object.keys(graphData.data));
+          this.setState({ graphData, loading: false });
+        })
+        .catch((error) => {
+          this.setState({ graphData: {}, loading: false, error: error.toString() });
+        })
+    );
   }
 
   formatData = (targets) => {
@@ -45,10 +44,9 @@ class Graph extends Component {
     if (graphData.length === 0) return {};
     const filteredGraphData = getFilteredGraphData(this.state, this.props, targets);
     if (typeof filteredGraphData == 'undefined') return {};
-    const ret = [];
-    const colors = ['#ff533d', '#52004b', '#80ff00', '#ffd43d'];
+    const result = [];
 
-    Object.keys(filteredGraphData).forEach((target, i) => {
+    Object.keys(filteredGraphData).forEach((target) => {
       const data = filteredGraphData[target];
       if (data.length > 0) {
         const values = [];
@@ -60,30 +58,32 @@ class Graph extends Component {
             });
           }
         }
-        const newobject = {
-          key: target, values, color: colors[i]
-        };
-        ret.push(newobject);
+        result.push({
+          key: target,
+          values
+        });
       }
     });
-    return ret;
+    return result;
   }
 
   render() {
-    const { targets, graphHeight } = this.props;
+    const { targets, height } = this.props;
     const datum = this.formatData(targets);
 
     const { type } = this.props;
-    const { loading } = this.state;
+    const { loading, error } = this.state;
     const StyledDivGraphNew = { ...StyledDivGraph };
-    return (loading) ? (<div>Loading...</div>) : (
-      <StyledDivGraphNew>
-        <Row>
-          <Col xs={12} md={12}>
-            <CustomChart type={type} datum={datum} svgHeight={graphHeight} />
-          </Col>
-        </Row>
-      </StyledDivGraphNew>
+    return (
+      loading
+        ? <div>Loading...</div>
+        : error ? <div>{error}</div>
+          : (
+            <StyledDivGraphNew>
+              <Chart type={type} datum={datum} height={height} />
+            </StyledDivGraphNew>
+          )
+
     );
   }
 }

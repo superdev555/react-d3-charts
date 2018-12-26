@@ -1,6 +1,16 @@
-
 import axios from 'axios';
 
-export default async function getGraphData(param) {
-  return axios.get(param.ApiURL);
-}
+const apiRequest = (method, url, options = {}) => {
+  const config = { method, url };
+
+  if (options.body) {
+    config.data = options.body;
+  }
+  config.headers = { 'Content-Type': 'application/json' };
+  return axios(config);
+};
+
+const getGraphData = param => apiRequest('get', param.apiUrl);
+
+
+export default getGraphData;
