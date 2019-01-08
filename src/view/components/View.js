@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Graph from '../graph';
-import SearchBar from './searchBar';
-import { GRAPH_TYPE_LINE_CHART } from '../graph/constants';
-import { StyledDivNav, StyledDivContent } from './styled';
+import Graph from '../../graph/components/Graph';
+import SearchBar from './SearchBar';
+import { GRAPH_TYPE_LINE_CHART } from '../../graph/constants';
+import { StyledDivNav, StyledDivContent } from '../styled';
 
 const startOfMonth = require('date-fns/start_of_month');
 const endOfMonth = require('date-fns/end_of_month');
@@ -11,21 +11,18 @@ const format = require('date-fns/format');
 class View extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       minDate: format(startOfMonth(new Date()), 'YYYY-MM-DD HH:mm'),
       maxDate: format(endOfMonth(new Date()), 'YYYY-MM-DD HH:mm'),
       type: GRAPH_TYPE_LINE_CHART,
       targets: [],
-      dispTargets: []
+      allTargets: ['target1', 'target2', 'target3'],
     };
   }
 
   onFilter = (minDate, maxDate) => {
     this.setState({ minDate, maxDate });
-  };
-
-  getTargets = (dispTargets) => {
-    this.setState({ dispTargets });
   };
 
   setTargets = (targets) => {
@@ -38,8 +35,9 @@ class View extends Component {
 
   render() {
     const {
-      minDate, maxDate, type, targets, dispTargets
+      minDate, maxDate, type, targets, allTargets,
     } = this.state;
+
     return (
       <div>
         <StyledDivNav>
@@ -47,7 +45,7 @@ class View extends Component {
             onFilter={this.onFilter}
             onTypeChange={this.onTypeChange}
             setTargets={this.setTargets}
-            dispTargets={dispTargets}
+            allTargets={allTargets}
           />
         </StyledDivNav>
         <StyledDivContent>
@@ -57,7 +55,6 @@ class View extends Component {
             minDate={minDate}
             maxDate={maxDate}
             targets={targets}
-            getTargets={this.getTargets}
             height={400}
           />
         </StyledDivContent>

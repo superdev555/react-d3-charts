@@ -1,13 +1,14 @@
 import React from 'react';
 import * as d3 from 'd3';
 import nv from 'nvd3';
-import { StyledSvg } from './styled';
-import { GRAPH_TYPE_LINE_CHART, GRAPH_TYPE_BAR_CHART } from './constants';
+import { StyledSvg } from '../styled';
+import { GRAPH_TYPE_LINE_CHART, GRAPH_TYPE_BAR_CHART } from '../constants';
 
-const Chart = (props) => {
+const Chart = ({ type, datum, height }) => {
+  const chart_id = 'custom_chart_' + Math.random().toString(36).substr(2, 9);
+
   nv.addGraph(() => {
     let chart = {};
-    const { type } = props;
     if (type === GRAPH_TYPE_BAR_CHART) {
       chart = nv.models.multiBarChart();
       chart.reduceXTicks(true);
@@ -29,19 +30,20 @@ const Chart = (props) => {
     chart.yAxis
       .tickFormat(d3.format('.02f'));
 
-    d3.select('#customChart > svg')
-      .datum(props.datum)
+    d3.select('#' + chart_id + ' > svg')
+      .datum(datum)
       .call(chart);
+
     nv.utils.windowResize(chart.update);
 
     return chart;
   });
 
-  const { height } = props;
   return (
-    <div id="customChart">
+    <div id={chart_id}>
       <StyledSvg height={height} />
     </div>
   );
 };
+
 export default Chart;

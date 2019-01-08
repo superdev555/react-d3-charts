@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 
-import Chart from './chart';
-import getFilteredGraphData from './selectors';
-import getGraphData from './api';
-import { StyledDivGraph } from './styled';
+import Chart from './Chart';
+import getFilteredGraphData from '../selectors';
+import getGraphData from '../api';
+import { StyledDivGraph } from '../styled';
 
 import 'nvd3/build/nv.d3.css';
-import 'bootstrap3/dist/css/bootstrap.min.css';
 
 class Graph extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       loading: false,
       graphData: {},
-      error: ''
+      error: '',
     };
   }
 
@@ -26,11 +26,9 @@ class Graph extends Component {
     const { apiUrl } = this.props;
     this.setState(
       { loading: true },
-      () => getGraphData({ apiUrl })
+      () => getGraphData(apiUrl)
         .then((response) => {
           const graphData = response.data;
-          const { getTargets } = this.props;
-          getTargets(Object.keys(graphData.data));
           this.setState({ graphData, loading: false });
         })
         .catch((error) => {
@@ -41,9 +39,13 @@ class Graph extends Component {
 
   formatData = (targets) => {
     const { graphData } = this.state;
-    if (graphData.length === 0) return {};
+    if (graphData.length === 0) {
+      return {};
+    }
     const filteredGraphData = getFilteredGraphData(this.state, this.props, targets);
-    if (typeof filteredGraphData == 'undefined') return {};
+    if (typeof filteredGraphData == 'undefined') {
+      return {};
+    }
     const result = [];
 
     Object.keys(filteredGraphData).forEach((target) => {
@@ -54,13 +56,13 @@ class Graph extends Component {
           if (c) {
             values.push({
               x: data[c][0],
-              y: data[c][1]
+              y: data[c][1],
             });
           }
         }
         result.push({
           key: target,
-          values
+          values,
         });
       }
     });
@@ -68,12 +70,12 @@ class Graph extends Component {
   }
 
   render() {
-    const { targets, height } = this.props;
+    const { targets, height, type } = this.props;
+    const { loading, error } = this.state;
     const datum = this.formatData(targets);
 
-    const { type } = this.props;
-    const { loading, error } = this.state;
     const StyledDivGraphNew = { ...StyledDivGraph };
+
     return (
       loading
         ? <div>Loading...</div>
@@ -83,9 +85,8 @@ class Graph extends Component {
               <Chart type={type} datum={datum} height={height} />
             </StyledDivGraphNew>
           )
-
     );
   }
 }
 
-export default (Graph);
+export default Graph;
