@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   Grid, Row, Col,
 } from 'react-bootstrap';
@@ -35,12 +36,12 @@ class SearchBar extends Component {
     this.targetsChanged(allTargets);
   }
 
-  handleStartChange = (mmt) => {
-    this.setState({ minDate: mmt }, () => this.onFilter());
+  handleStartChange = (minDate) => {
+    this.setState({ minDate }, () => this.onFilter());
   }
 
-  handleEndChange = (mmt) => {
-    this.setState({ maxDate: mmt }, () => this.onFilter());
+  handleEndChange = (maxDate) => {
+    this.setState({ maxDate }, () => this.onFilter());
   }
 
   targetsChanged = (newTargets) => {
@@ -82,6 +83,7 @@ class SearchBar extends Component {
           <Col md={3} xs={10}>
             <p>Chart type:</p>
             <Select
+              aria-label="Chart type"
               value={selectedOption}
               options={options}
               onChange={this.handleTypeChange}
@@ -90,6 +92,7 @@ class SearchBar extends Component {
           <Col md={2} xs={5}>
             <p>Start date:</p>
             <DatePicker
+              aria-label="Start date"
               id="start_datepicker"
               value={format(minDate, 'YYYY-MM-DD HH:mm')}
               onChange={this.handleStartChange}
@@ -99,6 +102,7 @@ class SearchBar extends Component {
           <Col md={2} md-offset={1} xs={5}>
             <p>End date:</p>
             <DatePicker
+              aria-label="End date"
               id="end_datepicker"
               value={format(maxDate, 'YYYY-MM-DD HH:mm')}
               onChange={this.handleEndChange}
@@ -111,7 +115,6 @@ class SearchBar extends Component {
             <p>Target type:</p>
             <StyledCheckGroup
               checkboxDepth={2}
-              name="targets"
               value={selectedTargets}
               onChange={this.targetsChanged}
             >
@@ -128,6 +131,13 @@ class SearchBar extends Component {
       </Grid>
     );
   }
+}
+
+SearchBar.propTypes = {
+  onFilter: PropTypes.func,
+  onTypeChange: PropTypes.func,
+  setTargets: PropTypes.func,
+  allTargets: PropTypes.array
 }
 
 export default SearchBar;

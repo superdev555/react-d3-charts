@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Graph from '../../graph/components/Graph';
-import SearchBar from './SearchBar';
+import SearchBar from '../../search-bar/components/SearchBar';
 import { GRAPH_TYPE_LINE_CHART } from '../../graph/constants';
 import { StyledDivNav, StyledDivContent } from '../styled';
 

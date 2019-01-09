@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 import nv from 'nvd3';
 import { StyledSvg } from '../styled';
@@ -45,5 +46,11 @@ const Chart = ({ type, datum, height }) => {
     </div>
   );
 };
+
+Chart.propTypes = {
+  type: PropTypes.number,
+  datum: PropTypes.array,
+  height: PropTypes.number
+}
 
 export default Chart;

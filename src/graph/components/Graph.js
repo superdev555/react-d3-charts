@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
 import Chart from './Chart';
 import getFilteredGraphData from '../selectors';
 import getGraphData from '../api';
 import { StyledDivGraph } from '../styled';
-
-import 'nvd3/build/nv.d3.css';
 
 class Graph extends Component {
   constructor(props) {
@@ -87,6 +85,13 @@ class Graph extends Component {
           )
     );
   }
+}
+
+Graph.propTypes = {
+  apiUrl: PropTypes.string,
+  targets: PropTypes.array,
+  height: PropTypes.number,
+  type: PropTypes.number
 }
 
 export default Graph;

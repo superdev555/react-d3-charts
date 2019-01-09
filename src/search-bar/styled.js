@@ -7,15 +7,6 @@ const StyledRow = styled(Row)`
   float: left;
 `;
 
-const StyledDivNav = styled.div`
-  padding: 20px;
-  background-color: #eeeeff;
-`;
-
-const StyledDivContent = styled.div`
-  padding: 20px;
-`;
-
 const StyledCheckLabel = styled.label`
   margin-right: 20px;
 `;
@@ -27,5 +18,5 @@ const StyledCheckGroup = styled(CheckboxGroup)`
 `;
 
 export {
-  StyledRow, StyledDivNav, StyledDivContent, StyledCheckGroup, StyledCheckLabel,
+  StyledRow, StyledCheckGroup, StyledCheckLabel,
 };

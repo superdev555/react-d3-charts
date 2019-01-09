@@ -1,12 +1,17 @@
-import React from 'react';
-import { render } from 'react-dom';
-import View from './view/components/View';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import '@babel/polyfill'
+import App from './app/components/App'
+import DefaultErrorBoundary from './app/components/DefaultErrorBoundary'
 
-import 'bootstrap3/dist/css/bootstrap.min.css';
+if (process.env.NODE_ENV === 'development') {
+  const axe = require('react-axe')
+  axe(React, ReactDOM, 1000)
+}
 
-const rootElement = document.getElementById('root');
-
-render(
-  <View />,
-  rootElement
-);
+ReactDOM.render(
+    <DefaultErrorBoundary>
+      <App />
+    </DefaultErrorBoundary>,
+  document.getElementById('app')
+)
