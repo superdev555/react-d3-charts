@@ -1,5 +1,6 @@
-import apiRequest from '../utils/apiRequest';
+import apiRequest from '../utils/apiRequest'
 
-const getGraphData = (url, auth, params = {}) => apiRequest('get', url, auth, params);
+const getGraphData = (url, auth, params = {}) =>
+  apiRequest('get', url, auth, params)
 
-export default getGraphData;
+export default getGraphData
