@@ -1,33 +1,32 @@
-import { createSelector } from 'reselect'
+import { createSelector } from 'reselect';
 
-const getGraphData = state => state.graphData
+const getGraphData = state => state.graphData;
 
 const getFormatedGraphData = createSelector(
   [getGraphData],
-  graphData => {
-    const data = graphData.data
+  (graphData) => {
+    const data = graphData.data;
     if (data == undefined) {
-      return []
+      return [];
     }
-    const nGraphData = []
+    const nGraphData = [];
     if (data.length > 0) {
-      var values = [],
-        index = 0
+      var values = [], index = 0;
       for (const c in data) {
         if (c) {
           values.push({
             x: index++,
-            y: data[c][0] == null ? 0 : data[c][0]
-          })
+            y: (data[c][0]==null)?0:data[c][0],
+          });
         }
       }
       nGraphData.push({
         key: 'data',
-        values
-      })
+        values,
+      });
     }
-    return nGraphData
+    return nGraphData;
   }
-)
+);
 
-export default getFormatedGraphData
+export default getFormatedGraphData;
