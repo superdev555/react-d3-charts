@@ -1,20 +1,33 @@
-import { createSelector } from 'reselect';
+import { createSelector } from 'reselect'
 
-const getMinDate = (state, props) => props.minDate;
-const getMaxDate = (state, props) => props.maxDate;
-const getGraphData = state => state.graphData;
-const getTargets = (state, props, targets) => targets;
+const getGraphData = state => state.graphData
 
-const getFilteredGraphData = createSelector(
-  [getMinDate, getMaxDate, getGraphData, getTargets],
-  (minDate, maxDate, graphData, targets) => {
-    const nGraphData = {};
-    for (const c in graphData.data) {
-      if (targets.includes(c)) {
-        nGraphData[c] = graphData.data[c].filter(val => (val[2] >= minDate && val[2] <= maxDate));
-      }
+const getFormatedGraphData = createSelector(
+  [getGraphData],
+  graphData => {
+    const data = graphData.data
+    if (data == undefined) {
+      return []
     }
-    return nGraphData;
+    const nGraphData = []
+    if (data.length > 0) {
+      var values = [],
+        index = 0
+      for (const c in data) {
+        if (c) {
+          values.push({
+            x: index++,
+            y: data[c][0] == null ? 0 : data[c][0]
+          })
+        }
+      }
+      nGraphData.push({
+        key: 'data',
+        values
+      })
+    }
+    return nGraphData
   }
-);
-export default getFilteredGraphData;
+)
+
+export default getFormatedGraphData

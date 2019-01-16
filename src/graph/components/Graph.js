@@ -1,97 +1,90 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Chart from './Chart';
-import getFilteredGraphData from '../selectors';
-import getGraphData from '../api';
-import { StyledDivGraph } from '../styled';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import Chart from './Chart'
+import getFormatedGraphData from '../selectors'
+import getGraphData from '../api'
+import { StyledDivGraph } from '../styled'
 
 class Graph extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
+      apiUrl: '',
       loading: false,
       graphData: {},
-      error: '',
-    };
+      error: ''
+    }
   }
 
   componentDidMount() {
-    this.getData();
+    this.getData()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.apiUrl !== this.state.apiUrl) {
+      this.getData()
+    }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.apiUrl !== prevState.apiUrl) {
+      return { apiUrl: nextProps.apiUrl }
+    } else return null
   }
 
   getData() {
-    const { apiUrl } = this.props;
-    this.setState(
-      { loading: true },
-      () => getGraphData(apiUrl)
-        .then((response) => {
-          const graphData = response.data;
-          this.setState({ graphData, loading: false });
+    const { apiUrl } = this.state
+    const { auth } = this.props
+    this.setState({ loading: true }, () =>
+      getGraphData(apiUrl, auth)
+        .then(response => {
+          const graphData = response.data
+          this.setState({ graphData, loading: false })
         })
-        .catch((error) => {
-          this.setState({ graphData: {}, loading: false, error: error.toString() });
+        .catch(error => {
+          this.setState({
+            graphData: {},
+            loading: false,
+            error: error.toString()
+          })
         })
-    );
+    )
   }
 
-  formatData = (targets) => {
-    const { graphData } = this.state;
-    if (graphData.length === 0) {
-      return {};
-    }
-    const filteredGraphData = getFilteredGraphData(this.state, this.props, targets);
-    if (typeof filteredGraphData == 'undefined') {
-      return {};
-    }
-    const result = [];
+  formatData = () => {
+    const { graphData } = this.state
 
-    Object.keys(filteredGraphData).forEach((target) => {
-      const data = filteredGraphData[target];
-      if (data.length > 0) {
-        const values = [];
-        for (const c in data) {
-          if (c) {
-            values.push({
-              x: data[c][0],
-              y: data[c][1],
-            });
-          }
-        }
-        result.push({
-          key: target,
-          values,
-        });
-      }
-    });
-    return result;
+    if (graphData.length === 0) {
+      return {}
+    }
+    return getFormatedGraphData(this.state)
   }
 
   render() {
-    const { targets, height, type } = this.props;
-    const { loading, error } = this.state;
-    const datum = this.formatData(targets);
+    const { height, type } = this.props
+    const { loading, error } = this.state
+    const datum = this.formatData()
 
-    const StyledDivGraphNew = { ...StyledDivGraph };
+    const StyledDivGraphNew = { ...StyledDivGraph }
 
-    return (
-      loading
-        ? <div>Loading...</div>
-        : error ? <div>{error}</div>
-          : (
-            <StyledDivGraphNew>
-              <Chart type={type} datum={datum} height={height} />
-            </StyledDivGraphNew>
-          )
-    );
+    return loading ? (
+      <div>Loading...</div>
+    ) : error ? (
+      <div>{error}</div>
+    ) : (
+      <StyledDivGraphNew>
+        <Chart type={type} datum={datum} height={height} />
+      </StyledDivGraphNew>
+    )
   }
 }
 
 Graph.propTypes = {
   apiUrl: PropTypes.string,
-  targets: PropTypes.array,
+  auth: PropTypes.object,
   height: PropTypes.number,
   type: PropTypes.number
 }
 
-export default Graph;
+export default Graph
