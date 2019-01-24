@@ -1,12 +1,21 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const StyledSvg = styled.svg`
   height: ${props => props.height}px;
-`;
+`
 
 const StyledDivGraph = styled.div`
   padding: 20px;
   margin-top: 10px;
-`;
+`
 
-export { StyledSvg, StyledDivGraph }
+const StyledDivNav = styled.div`
+  padding: 20px;
+  background-color: #eeeeff;
+`
+
+const StyledDivContent = styled.div`
+  padding: 20px;
+`
+
+export { StyledSvg, StyledDivGraph, StyledDivNav, StyledDivContent }

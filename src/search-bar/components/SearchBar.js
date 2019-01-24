@@ -30,26 +30,28 @@ class SearchBar extends Component {
   }
 
   handleStartChange = minDate => {
-    this.setState({ minDate }, () => this.onFilter())
+    this.setState({ minDate }, () => this.onDateFilter())
   }
 
   handleEndChange = maxDate => {
-    this.setState({ maxDate }, () => this.onFilter())
+    this.setState({ maxDate }, () => this.onDateFilter())
   }
 
-  onFilter = () => {
+  onDateFilter = () => {
     const { minDate, maxDate } = this.state
-    const { onFilter } = this.props
+    const { onDateFilter } = this.props
     if (minDate > maxDate) {
       alert('Start date must be less than end date.')
     } else {
-      onFilter(format(minDate, 'YYYY-MM-DD'), format(maxDate, 'YYYY-MM-DD'))
+      onDateFilter(format(minDate, 'YYYY-MM-DD'), format(maxDate, 'YYYY-MM-DD'))
     }
   }
 
-  handleTypeChange = type => {
-    const { onTypeChange } = this.props
-    this.setState({ selectedOption: type }, () => onTypeChange(type.value))
+  handleChartTypeChange = chartType => {
+    const { onChartTypeChange } = this.props
+    this.setState({ selectedOption: chartType }, () =>
+      onChartTypeChange(chartType.value)
+    )
   }
 
   render() {
@@ -65,7 +67,7 @@ class SearchBar extends Component {
               aria-label="Chart type"
               value={selectedOption}
               options={chartTypes}
-              onChange={this.handleTypeChange}
+              onChange={this.handleChartTypeChange}
             />
           </Col>
           {Object.keys(components).map(function(key) {
@@ -75,7 +77,7 @@ class SearchBar extends Component {
                 <FilterItem
                   paramName={key}
                   label={filterComp.label}
-                  type={filterComp.type}
+                  filterType={filterComp.type}
                   choices={filterComp.choices}
                   onApiParamChange={onApiParamChange}
                 />
@@ -109,10 +111,10 @@ class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
-  onFilter: PropTypes.func,
-  onTypeChange: PropTypes.func,
-  onApiParamChange: PropTypes.func,
-  components: PropTypes.object
+  components: PropTypes.object,
+  onChartTypeChange: PropTypes.func,
+  onDateFilter: PropTypes.func,
+  onApiParamChange: PropTypes.func
 }
 
 export default SearchBar

@@ -5,11 +5,11 @@ import Select from 'react-select'
 class FilterItem extends React.Component {
   constructor(props) {
     super(props)
-    if (props.type == 'drop_down') {
+    if (props.filterType == 'drop_down') {
       this.state = {
         curOption: props.choices[0]
       }
-    } else if (props.type == 'text_field') {
+    } else if (props.filterType == 'text_field') {
       this.state = {
         curOption: ''
       }
@@ -17,12 +17,12 @@ class FilterItem extends React.Component {
   }
 
   handleChangeOption = option => {
-    const { type, onApiParamChange, paramName } = this.props
-    if (type == 'drop_down') {
+    const { filterType, onApiParamChange, paramName } = this.props
+    if (filterType == 'drop_down') {
       this.setState({ curOption: option }, () =>
         onApiParamChange(paramName, option.value)
       )
-    } else if (type == 'text_field') {
+    } else if (filterType == 'text_field') {
       const newValue = option.target.value
       this.setState({ curOption: newValue }, () =>
         onApiParamChange(paramName, newValue)
@@ -32,10 +32,10 @@ class FilterItem extends React.Component {
 
   render() {
     const { curOption } = this.state
-    const { label, type, choices } = this.props
+    const { label, filterType, choices } = this.props
 
     let item = ''
-    if (type == 'drop_down') {
+    if (filterType == 'drop_down') {
       item = (
         <Select
           aria-label={label}
@@ -44,7 +44,7 @@ class FilterItem extends React.Component {
           onChange={this.handleChangeOption}
         />
       )
-    } else if (type == 'text_field') {
+    } else if (filterType == 'text_field') {
       item = <input onChange={this.handleChangeOption} />
     }
 
@@ -60,7 +60,7 @@ class FilterItem extends React.Component {
 FilterItem.propTypes = {
   paramName: PropTypes.string,
   label: PropTypes.string,
-  type: PropTypes.string,
+  filterType: PropTypes.string,
   defaultValue: PropTypes.string,
   choices: PropTypes.array,
   onApiParamChange: PropTypes.func
