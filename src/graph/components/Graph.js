@@ -1,15 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { startOfMonth, endOfMonth, format } from 'date-fns'
 import Chart from './Chart'
 import getFormatedGraphData from '../selectors'
 import getGraphData from '../api'
 import SearchBar from '../../search-bar/components/SearchBar'
 import { StyledDivGraph, StyledDivNav, StyledDivContent } from '../styled'
 import { GRAPH_TYPE_LINE_CHART } from '../constants'
-
-const startOfMonth = require('date-fns/start_of_month')
-const endOfMonth = require('date-fns/end_of_month')
-const format = require('date-fns/format')
 
 class Graph extends Component {
   constructor(props) {
@@ -96,6 +93,7 @@ class Graph extends Component {
   onApiParamChange = (param, value) => {
     const { url } = this.props
     let { apiParams } = this.state
+
     let apiUrl = url
     apiParams[param] = value
 
@@ -108,8 +106,8 @@ class Graph extends Component {
   render() {
     const { height, components } = this.props
     const { chartType, loading, error } = this.state
-    const datum = this.formatData()
 
+    const datum = this.formatData()
     const StyledDivGraphNew = { ...StyledDivGraph }
 
     return (

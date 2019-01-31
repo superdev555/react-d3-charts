@@ -5,6 +5,7 @@ import Select from 'react-select'
 class FilterItem extends React.Component {
   constructor(props) {
     super(props)
+
     if (props.filterType == 'drop_down') {
       this.state = {
         curOption: props.choices[0]
@@ -18,6 +19,7 @@ class FilterItem extends React.Component {
 
   handleChangeOption = option => {
     const { filterType, onApiParamChange, paramName } = this.props
+
     if (filterType == 'drop_down') {
       this.setState({ curOption: option }, () =>
         onApiParamChange(paramName, option.value)

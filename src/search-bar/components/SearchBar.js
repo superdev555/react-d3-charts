@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Grid, Row, Col } from 'react-bootstrap'
+import { startOfMonth, endOfMonth, format } from 'date-fns'
 import Select from 'react-select'
 import {
   GRAPH_TYPE_LINE_CHART,
@@ -9,9 +10,6 @@ import {
 import FilterItem from './FilterItem'
 
 const DatePicker = require('react-16-bootstrap-date-picker')
-const startOfMonth = require('date-fns/start_of_month')
-const endOfMonth = require('date-fns/end_of_month')
-const format = require('date-fns/format')
 
 const chartTypes = [
   { value: GRAPH_TYPE_LINE_CHART, label: 'Line Chart' },
@@ -40,6 +38,7 @@ class SearchBar extends Component {
   onDateFilter = () => {
     const { minDate, maxDate } = this.state
     const { onDateFilter } = this.props
+
     if (minDate > maxDate) {
       alert('Start date must be less than end date.')
     } else {
@@ -49,6 +48,7 @@ class SearchBar extends Component {
 
   handleChartTypeChange = chartType => {
     const { onChartTypeChange } = this.props
+
     this.setState({ selectedOption: chartType }, () =>
       onChartTypeChange(chartType.value)
     )
