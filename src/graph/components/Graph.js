@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { startOfMonth, endOfMonth, format } from 'date-fns'
 import Chart from './Chart'
 import getFormatedGraphData from '../selectors'
 import getGraphData from '../api'
@@ -11,7 +10,7 @@ class Graph extends Component {
   constructor(props) {
     super(props)
 
-    const { components, url } = props
+    const { components, url, defaultStartDate, defaultEndDate } = props
     let apiParams = {},
       apiUrl = url
     Object.keys(components).map(function(key) {
@@ -24,8 +23,8 @@ class Graph extends Component {
       loading: false,
       graphData: {},
       error: '',
-      minDate: format(startOfMonth(new Date()), 'YYYY-MM-DD HH:mm'),
-      maxDate: format(endOfMonth(new Date()), 'YYYY-MM-DD HH:mm'),
+      minDate: defaultStartDate,
+      maxDate: defaultEndDate,
       apiParams
     }
   }
@@ -98,7 +97,15 @@ class Graph extends Component {
   }
 
   render() {
-    const { height, components, chartType } = this.props
+    const {
+      chartHeight,
+      components,
+      chartType,
+      minStartDate,
+      maxEndDate,
+      defaultStartDate,
+      defaultEndDate
+    } = this.props
     const { loading, error } = this.state
 
     const datum = this.formatData()
@@ -111,6 +118,10 @@ class Graph extends Component {
             components={components}
             onDateFilter={this.onDateFilter}
             onApiParamChange={this.onApiParamChange}
+            minStartDate={minStartDate}
+            maxEndDate={maxEndDate}
+            defaultStartDate={defaultStartDate}
+            defaultEndDate={defaultEndDate}
           />
         </StyledDivNav>
         <StyledDivContent>
@@ -120,7 +131,11 @@ class Graph extends Component {
             <div>{error}</div>
           ) : (
             <StyledDivGraphNew>
-              <Chart chartType={chartType} datum={datum} height={height} />
+              <Chart
+                chartType={chartType}
+                datum={datum}
+                chartHeight={chartHeight}
+              />
             </StyledDivGraphNew>
           )}
         </StyledDivContent>
@@ -133,7 +148,11 @@ Graph.propTypes = {
   auth: PropTypes.object,
   url: PropTypes.string,
   components: PropTypes.object,
-  height: PropTypes.number,
+  minStartDate: PropTypes.instanceOf(Date),
+  maxEndDate: PropTypes.instanceOf(Date),
+  defaultStartDate: PropTypes.instanceOf(Date),
+  defaultEndDate: PropTypes.instanceOf(Date),
+  chartHeight: PropTypes.number,
   chartType: PropTypes.number
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Grid, Row, Col } from 'react-bootstrap'
-import { startOfMonth, endOfMonth, format } from 'date-fns'
+import { format } from 'date-fns'
 import FilterItem from './FilterItem'
 
 const DatePicker = require('react-16-bootstrap-date-picker')
@@ -10,9 +10,10 @@ class SearchBar extends Component {
   constructor(props) {
     super(props)
 
+    const { defaultStartDate, defaultEndDate } = props
     this.state = {
-      minDate: startOfMonth(new Date()),
-      maxDate: endOfMonth(new Date())
+      minDate: defaultStartDate,
+      maxDate: defaultEndDate
     }
   }
 
@@ -37,7 +38,12 @@ class SearchBar extends Component {
 
   render() {
     const { minDate, maxDate } = this.state
-    const { components, onApiParamChange } = this.props
+    const {
+      components,
+      onApiParamChange,
+      minStartDate,
+      maxEndDate
+    } = this.props
 
     return (
       <Grid>
@@ -50,6 +56,8 @@ class SearchBar extends Component {
               value={format(minDate, 'YYYY-MM-DD HH:mm')}
               onChange={this.handleStartChange}
               showClearButton={false}
+              minDate={format(minStartDate, 'YYYY-MM-DD HH:mm')}
+              maxDate={format(maxDate, 'YYYY-MM-DD HH:mm')}
             />
           </Col>
           <Col md={2} md-offset={1} xs={5}>
@@ -60,6 +68,8 @@ class SearchBar extends Component {
               value={format(maxDate, 'YYYY-MM-DD HH:mm')}
               onChange={this.handleEndChange}
               showClearButton={false}
+              minDate={format(minDate, 'YYYY-MM-DD HH:mm')}
+              maxDate={format(maxEndDate, 'YYYY-MM-DD HH:mm')}
             />
           </Col>
           {Object.keys(components).map(function(key) {
@@ -85,7 +95,11 @@ class SearchBar extends Component {
 SearchBar.propTypes = {
   components: PropTypes.object,
   onDateFilter: PropTypes.func,
-  onApiParamChange: PropTypes.func
+  onApiParamChange: PropTypes.func,
+  minStartDate: PropTypes.instanceOf(Date),
+  maxEndDate: PropTypes.instanceOf(Date),
+  defaultStartDate: PropTypes.instanceOf(Date),
+  defaultEndDate: PropTypes.instanceOf(Date)
 }
 
 export default SearchBar

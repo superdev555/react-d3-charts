@@ -2,6 +2,7 @@ import React from 'react'
 import { hot } from 'react-hot-loader'
 import Graph from '../../graph/components/Graph'
 import { GRAPH_TYPE_LINE_CHART } from '../../graph/constants'
+import { startOfMonth, endOfMonth } from 'date-fns'
 
 class App extends React.Component {
   render() {
@@ -37,7 +38,11 @@ class App extends React.Component {
         url={url}
         auth={auth}
         components={components}
-        height={400}
+        minStartDate={new Date('1990-01-01T00:00:00')}
+        maxEndDate={new Date('2030-12-31T00:00:00')}
+        defaultStartDate={startOfMonth(new Date())}
+        defaultEndDate={endOfMonth(new Date())}
+        chartHeight={400}
         chartType={GRAPH_TYPE_LINE_CHART}
       />
     )

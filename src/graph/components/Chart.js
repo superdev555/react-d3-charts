@@ -5,7 +5,7 @@ import nv from 'nvd3'
 import { StyledSvg } from '../styled'
 import { GRAPH_TYPE_LINE_CHART, GRAPH_TYPE_BAR_CHART } from '../constants'
 
-const Chart = ({ chartType, datum, height }) => {
+const Chart = ({ chartType, datum, chartHeight }) => {
   const chart_id =
     'custom_chart_' +
     Math.random()
@@ -47,7 +47,7 @@ const Chart = ({ chartType, datum, height }) => {
 
   return (
     <div id={chart_id}>
-      <StyledSvg height={height} />
+      <StyledSvg height={chartHeight} />
     </div>
   )
 }
@@ -55,7 +55,7 @@ const Chart = ({ chartType, datum, height }) => {
 Chart.propTypes = {
   chartType: PropTypes.number,
   datum: PropTypes.array,
-  height: PropTypes.number
+  chartHeight: PropTypes.number
 }
 
 export default Chart
