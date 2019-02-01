@@ -52,7 +52,6 @@ class SearchBar extends Component {
             <p>Start date:</p>
             <DatePicker
               aria-label="Start date"
-              id="start_datepicker"
               value={format(minDate, 'YYYY-MM-DD HH:mm')}
               onChange={this.handleStartChange}
               showClearButton={false}
@@ -64,7 +63,6 @@ class SearchBar extends Component {
             <p>End date:</p>
             <DatePicker
               aria-label="End date"
-              id="end_datepicker"
               value={format(maxDate, 'YYYY-MM-DD HH:mm')}
               onChange={this.handleEndChange}
               showClearButton={false}
