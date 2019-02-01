@@ -71,6 +71,7 @@
     "react-16-bootstrap-date-picker": "^5.1.2",
     "react-bootstrap": "^0.32.4",
     "react-checkbox-group": "^4.0.1",
+    "react-datepicker": "^2.0.0",
     "react-dom": "^16.6.1",
     "react-hot-loader": "^4.3.12",
     "react-nvd3": "^0.5.7",

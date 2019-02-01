@@ -2,19 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { startOfMonth, endOfMonth, format } from 'date-fns'
-import Select from 'react-select'
-import {
-  GRAPH_TYPE_LINE_CHART,
-  GRAPH_TYPE_BAR_CHART
-} from '../../graph/constants'
 import FilterItem from './FilterItem'
 
 const DatePicker = require('react-16-bootstrap-date-picker')
-
-const chartTypes = [
-  { value: GRAPH_TYPE_LINE_CHART, label: 'Line Chart' },
-  { value: GRAPH_TYPE_BAR_CHART, label: 'Bar Chart' }
-]
 
 class SearchBar extends Component {
   constructor(props) {
@@ -22,8 +12,7 @@ class SearchBar extends Component {
 
     this.state = {
       minDate: startOfMonth(new Date()),
-      maxDate: endOfMonth(new Date()),
-      selectedOption: chartTypes[0]
+      maxDate: endOfMonth(new Date())
     }
   }
 
@@ -46,44 +35,13 @@ class SearchBar extends Component {
     }
   }
 
-  handleChartTypeChange = chartType => {
-    const { onChartTypeChange } = this.props
-
-    this.setState({ selectedOption: chartType }, () =>
-      onChartTypeChange(chartType.value)
-    )
-  }
-
   render() {
-    const { minDate, maxDate, selectedOption } = this.state
+    const { minDate, maxDate } = this.state
     const { components, onApiParamChange } = this.props
 
     return (
       <Grid>
         <Row>
-          <Col md={3} xs={10}>
-            <p>Chart type:</p>
-            <Select
-              aria-label="Chart type"
-              value={selectedOption}
-              options={chartTypes}
-              onChange={this.handleChartTypeChange}
-            />
-          </Col>
-          {Object.keys(components).map(function(key) {
-            const filterComp = components[key]
-            return (
-              <Col md={2} xs={10} key={key}>
-                <FilterItem
-                  paramName={key}
-                  label={filterComp.label}
-                  filterType={filterComp.type}
-                  choices={filterComp.choices}
-                  onApiParamChange={onApiParamChange}
-                />
-              </Col>
-            )
-          })}
           <Col md={2} xs={5}>
             <p>Start date:</p>
             <DatePicker
@@ -104,6 +62,20 @@ class SearchBar extends Component {
               showClearButton={false}
             />
           </Col>
+          {Object.keys(components).map(function(key) {
+            const filterComp = components[key]
+            return (
+              <Col md={2} xs={10} key={key}>
+                <FilterItem
+                  paramName={key}
+                  label={filterComp.label}
+                  filterType={filterComp.type}
+                  choices={filterComp.choices}
+                  onApiParamChange={onApiParamChange}
+                />
+              </Col>
+            )
+          })}
         </Row>
       </Grid>
     )
@@ -112,7 +84,6 @@ class SearchBar extends Component {
 
 SearchBar.propTypes = {
   components: PropTypes.object,
-  onChartTypeChange: PropTypes.func,
   onDateFilter: PropTypes.func,
   onApiParamChange: PropTypes.func
 }

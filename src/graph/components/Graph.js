@@ -6,7 +6,6 @@ import getFormatedGraphData from '../selectors'
 import getGraphData from '../api'
 import SearchBar from '../../search-bar/components/SearchBar'
 import { StyledDivGraph, StyledDivNav, StyledDivContent } from '../styled'
-import { GRAPH_TYPE_LINE_CHART } from '../constants'
 
 class Graph extends Component {
   constructor(props) {
@@ -21,7 +20,6 @@ class Graph extends Component {
     })
 
     this.state = {
-      chartType: GRAPH_TYPE_LINE_CHART,
       apiUrl,
       loading: false,
       graphData: {},
@@ -82,10 +80,6 @@ class Graph extends Component {
     return getFormatedGraphData(this.state)
   }
 
-  onChartTypeChange = chartType => {
-    this.setState({ chartType })
-  }
-
   onDateFilter = (minDate, maxDate) => {
     this.setState({ minDate, maxDate })
   }
@@ -104,8 +98,8 @@ class Graph extends Component {
   }
 
   render() {
-    const { height, components } = this.props
-    const { chartType, loading, error } = this.state
+    const { height, components, chartType } = this.props
+    const { loading, error } = this.state
 
     const datum = this.formatData()
     const StyledDivGraphNew = { ...StyledDivGraph }
@@ -115,7 +109,6 @@ class Graph extends Component {
         <StyledDivNav>
           <SearchBar
             components={components}
-            onChartTypeChange={this.onChartTypeChange}
             onDateFilter={this.onDateFilter}
             onApiParamChange={this.onApiParamChange}
           />
@@ -140,7 +133,8 @@ Graph.propTypes = {
   auth: PropTypes.object,
   url: PropTypes.string,
   components: PropTypes.object,
-  height: PropTypes.number
+  height: PropTypes.number,
+  chartType: PropTypes.number
 }
 
 export default Graph

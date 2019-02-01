@@ -1,6 +1,7 @@
 import React from 'react'
 import { hot } from 'react-hot-loader'
 import Graph from '../../graph/components/Graph'
+import { GRAPH_TYPE_LINE_CHART } from '../../graph/constants'
 
 class App extends React.Component {
   render() {
@@ -31,7 +32,15 @@ class App extends React.Component {
     }
     const url = 'https://api.apeiron.io/v2/graphs/voice/calls_total'
 
-    return <Graph url={url} auth={auth} components={components} height={400} />
+    return (
+      <Graph
+        url={url}
+        auth={auth}
+        components={components}
+        height={400}
+        chartType={GRAPH_TYPE_LINE_CHART}
+      />
+    )
   }
 }
 

@@ -30,9 +30,11 @@ const Chart = ({ chartType, datum, height }) => {
       chart.showXAxis(true)
     }
 
-    chart.xAxis.tickFormat(d3.format(',.2r'))
+    chart.xAxis.tickFormat(function(d) {
+      return d3.time.format('%x')(new Date(d))
+    })
 
-    chart.yAxis.tickFormat(d3.format('.02f'))
+    chart.yAxis.tickFormat(d3.format(',f'))
 
     d3.select('#' + chart_id + ' > svg')
       .datum(datum)
