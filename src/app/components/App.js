@@ -31,7 +31,8 @@ class App extends React.Component {
       password:
         'g470E6bTu796eZIfwzzIkJmjsCsElZAlX2NLlqtT8wWFsaDTC1J9ZDgB9624CEJv'
     }
-    const url = 'https://api.apeiron.io/v2/graphs/voice/calls_total'
+    const url =
+      'https://api.apeiron.io/v2/graphs/voice/calls_total/{{trunk_id}}/{{direction}}'
 
     return (
       <Graph

@@ -33,8 +33,8 @@ const Chart = ({ chartType, datum, chartHeight }) => {
     chart.xAxis.tickFormat(function(d) {
       return d3.time.format('%x')(new Date(d))
     })
-
     chart.yAxis.tickFormat(d3.format(',f'))
+    chart.noData('There is no data to display.')
 
     d3.select('#' + chart_id + ' > svg')
       .datum(datum)

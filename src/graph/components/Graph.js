@@ -15,7 +15,7 @@ class Graph extends Component {
       apiUrl = url
     Object.keys(components).map(function(key) {
       apiParams[key] = components[key].choices[0].value
-      apiUrl += '/' + apiParams[key]
+      apiUrl = apiUrl.replace(`{{${key}}}`, apiParams[key])
     })
 
     this.state = {
@@ -91,7 +91,7 @@ class Graph extends Component {
     apiParams[param] = value
 
     Object.keys(apiParams).map(function(key) {
-      apiUrl += '/' + apiParams[key]
+      apiUrl = apiUrl.replace(`{{${key}}}`, apiParams[key])
     })
     this.setState({ apiUrl })
   }
