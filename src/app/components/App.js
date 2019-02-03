@@ -15,8 +15,8 @@ class App extends React.Component {
           maxEndDate={new Date(data1.maxEndDate)}
           defaultStartDate={new Date(data1.defaultStartDate)}
           defaultEndDate={new Date(data1.defaultEndDate)}
-          chartHeight={data1.chartHeight}
           chartType={data1.chartType}
+          chartHeight={data1.chartHeight}
         />
         <Graph
           url={data2.url}
@@ -26,8 +26,8 @@ class App extends React.Component {
           maxEndDate={new Date(data2.maxEndDate)}
           defaultStartDate={new Date(data2.defaultStartDate)}
           defaultEndDate={new Date(data2.defaultEndDate)}
-          chartHeight={data2.chartHeight}
           chartType={data2.chartType}
+          chartHeight={data2.chartHeight}
         />
       </div>
     )

@@ -16,6 +16,7 @@ const StyledDivNav = styled.div`
 
 const StyledDivContent = styled.div`
   padding: 20px;
+  min-height: ${props => props.height}px;
 `
 
 export { StyledSvg, StyledDivGraph, StyledDivNav, StyledDivContent }

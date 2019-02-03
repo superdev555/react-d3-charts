@@ -21,8 +21,8 @@ class Graph extends Component {
     this.state = {
       apiUrl,
       loading: false,
-      graphData: {},
       error: '',
+      graphData: {},
       minDate: defaultStartDate,
       maxDate: defaultEndDate,
       apiParams
@@ -98,13 +98,13 @@ class Graph extends Component {
 
   render() {
     const {
-      chartHeight,
       components,
-      chartType,
       minStartDate,
       maxEndDate,
       defaultStartDate,
-      defaultEndDate
+      defaultEndDate,
+      chartType,
+      chartHeight
     } = this.props
     const { loading, error } = this.state
 
@@ -124,7 +124,7 @@ class Graph extends Component {
             defaultEndDate={defaultEndDate}
           />
         </StyledDivNav>
-        <StyledDivContent>
+        <StyledDivContent height={chartHeight}>
           {loading ? (
             <div>Loading...</div>
           ) : error ? (
@@ -152,8 +152,8 @@ Graph.propTypes = {
   maxEndDate: PropTypes.instanceOf(Date),
   defaultStartDate: PropTypes.instanceOf(Date),
   defaultEndDate: PropTypes.instanceOf(Date),
-  chartHeight: PropTypes.number,
-  chartType: PropTypes.number
+  chartType: PropTypes.number,
+  chartHeight: PropTypes.number
 }
 
 export default Graph

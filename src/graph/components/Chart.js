@@ -3,7 +3,11 @@ import PropTypes from 'prop-types'
 import * as d3 from 'd3'
 import nv from 'nvd3'
 import { StyledSvg } from '../styled'
-import { GRAPH_TYPE_LINE_CHART, GRAPH_TYPE_BAR_CHART } from '../constants'
+import {
+  GRAPH_TYPE_LINE_CHART,
+  GRAPH_TYPE_BAR_CHART,
+  NO_GRAPH_DATA_MESSAGE
+} from '../constants'
 
 const Chart = ({ chartType, datum, chartHeight }) => {
   const chart_id =
@@ -34,7 +38,7 @@ const Chart = ({ chartType, datum, chartHeight }) => {
       return d3.time.format('%x')(new Date(d))
     })
     chart.yAxis.tickFormat(d3.format(',f'))
-    chart.noData('There is no data to display.')
+    chart.noData(NO_GRAPH_DATA_MESSAGE)
 
     d3.select('#' + chart_id + ' > svg')
       .datum(datum)
