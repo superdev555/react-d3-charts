@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import '@babel/polyfill'
 import App from './app/components/App'
 import DefaultErrorBoundary from './app/components/DefaultErrorBoundary'
+require('react-datepicker/dist/react-datepicker-cssmodules.css')
 
 if (process.env.NODE_ENV === 'development') {
   const axe = require('react-axe')
@@ -10,8 +11,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 ReactDOM.render(
-    <DefaultErrorBoundary>
-      <App />
-    </DefaultErrorBoundary>,
+  <DefaultErrorBoundary>
+    <App />
+  </DefaultErrorBoundary>,
   document.getElementById('app')
 )

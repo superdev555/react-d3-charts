@@ -4,7 +4,7 @@ import { Grid, Row, Col } from 'react-bootstrap'
 import { format } from 'date-fns'
 import FilterItem from './FilterItem'
 
-const DatePicker = require('react-16-bootstrap-date-picker')
+import DatePicker from 'react-datepicker'
 
 class SearchBar extends Component {
   constructor(props) {
@@ -32,7 +32,10 @@ class SearchBar extends Component {
     if (minDate > maxDate) {
       alert('Start date must be less than end date.')
     } else {
-      onDateFilter(format(minDate, 'YYYY-MM-DD'), format(maxDate, 'YYYY-MM-DD'))
+      onDateFilter(
+        format(minDate, 'YYYY-MM-DD HH:mm'),
+        format(maxDate, 'YYYY-MM-DD HH:mm')
+      )
     }
   }
 
@@ -48,26 +51,28 @@ class SearchBar extends Component {
     return (
       <Grid>
         <Row>
-          <Col md={2} xs={5}>
+          <Col md={3} xs={5}>
             <p>Start date:</p>
             <DatePicker
               aria-label="Start date"
-              value={format(minDate, 'YYYY-MM-DD HH:mm')}
+              selected={minDate}
               onChange={this.handleStartChange}
-              showClearButton={false}
-              minDate={format(minStartDate, 'YYYY-MM-DD HH:mm')}
-              maxDate={format(maxDate, 'YYYY-MM-DD HH:mm')}
+              showTimeSelect
+              dateFormat="yyyy/MM/dd h:mm aa"
+              minDate={minStartDate}
+              maxDate={maxDate}
             />
           </Col>
-          <Col md={2} md-offset={1} xs={5}>
+          <Col md={3} md-offset={1} xs={5}>
             <p>End date:</p>
             <DatePicker
               aria-label="End date"
-              value={format(maxDate, 'YYYY-MM-DD HH:mm')}
+              selected={maxDate}
               onChange={this.handleEndChange}
-              showClearButton={false}
-              minDate={format(minDate, 'YYYY-MM-DD HH:mm')}
-              maxDate={format(maxEndDate, 'YYYY-MM-DD HH:mm')}
+              showTimeSelect
+              dateFormat="yyyy/MM/dd h:mm aa"
+              minDate={minDate}
+              maxDate={maxEndDate}
             />
           </Col>
           {Object.keys(components).map(function(key) {

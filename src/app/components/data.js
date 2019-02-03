@@ -30,8 +30,8 @@ const data1 = {
       ]
     }
   },
-  minStartDate: '1990-01-01T00:00:00',
-  maxEndDate: '2030-12-31T00:00:00',
+  minStartDate: '2016-01-01T00:00:00',
+  maxEndDate: '2020-10-31T00:00:00',
   defaultStartDate: '2019-01-01T00:00:00',
   defaultEndDate: '2019-01-15T00:00:00',
   chartHeight: 400,
@@ -65,8 +65,8 @@ const data2 = {
       ]
     }
   },
-  minStartDate: '1990-01-01T00:00:00',
-  maxEndDate: '2030-12-31T00:00:00',
+  minStartDate: '2018-01-01T00:00:00',
+  maxEndDate: '2020-12-31T00:00:00',
   defaultStartDate: '2019-01-15T00:00:00',
   defaultEndDate: '2019-01-30T00:00:00',
   chartHeight: 400,
