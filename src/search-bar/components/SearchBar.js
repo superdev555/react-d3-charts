@@ -5,6 +5,7 @@ import { format } from 'date-fns'
 import FilterItem from './FilterItem'
 
 import DatePicker from 'react-datepicker'
+import DatePickerWapper from '../styled'
 
 class SearchBar extends Component {
   constructor(props) {
@@ -51,29 +52,35 @@ class SearchBar extends Component {
     return (
       <Grid>
         <Row>
-          <Col md={3} xs={5}>
+          <Col md={2} xs={5}>
             <p>Start date:</p>
-            <DatePicker
-              aria-label="Start date"
-              selected={minDate}
-              onChange={this.handleStartChange}
-              showTimeSelect
-              dateFormat="yyyy/MM/dd h:mm aa"
-              minDate={minStartDate}
-              maxDate={maxDate}
-            />
+            <DatePickerWapper>
+              <DatePicker
+                aria-label="Start date"
+                selected={minDate}
+                onChange={this.handleStartChange}
+                showTimeSelect
+                timeFormat="HH:mm"
+                dateFormat="yyyy/MM/dd h:mm aa"
+                minDate={minStartDate}
+                maxDate={maxDate}
+              />
+            </DatePickerWapper>
           </Col>
-          <Col md={3} md-offset={1} xs={5}>
+          <Col md={2} md-offset={1} xs={5}>
             <p>End date:</p>
-            <DatePicker
-              aria-label="End date"
-              selected={maxDate}
-              onChange={this.handleEndChange}
-              showTimeSelect
-              dateFormat="yyyy/MM/dd h:mm aa"
-              minDate={minDate}
-              maxDate={maxEndDate}
-            />
+            <DatePickerWapper>
+              <DatePicker
+                aria-label="End date"
+                selected={maxDate}
+                onChange={this.handleEndChange}
+                showTimeSelect
+                timeFormat="HH:mm"
+                dateFormat="yyyy/MM/dd h:mm aa"
+                minDate={minDate}
+                maxDate={maxEndDate}
+              />
+            </DatePickerWapper>
           </Col>
           {Object.keys(components).map(function(key) {
             const filterComp = components[key]
