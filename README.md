@@ -1,20 +1,48 @@
-# React-NVD3-Graph-Application
+# React-D3-Chart
 
-My simple starter kit which I'd love to share to the community. The project was generated from `create-react-app` and then I included a few libraries.
+ReactJS component to display data as a line & bar chart using d3.
+The main purpose of this component is to help you to write charts in React applications without any pain.
 
-## Features Out-Of-The-Box
+## Screenshot
 
-* React-Router 4
-* Redux
-* Redux Saga
-* Styled-Components
-* ESlint
-* Airbnb's ESlint rules
+![Screen](/public/images/d3-charts.gif)
 
 ## Installation
 
-Clone repo and run:
+### Clone the repo via git:
 
-```
-yarn && yarn start
-```
+    $ git clone -b v1 https://github.com/hryhorii515/react-d3-charts.git
+
+### Install the dependencies using npm
+
+    $ npm install
+
+### Run the app
+
+    $ npm start
+
+This will run the development server on [localhost:3000](http://localhost:3000).
+
+## Technologies
+
+This project was built using the following technologies:
+
+- [React](https://reactjs.org/)
+- [Redux](https://redux.js.org/)
+- Redux Saga
+- React-Router
+- [Styled-Components](https://www.styled-components.com/)
+- [D3](https://d3js.org/)
+- [NVD3](http://nvd3.org/)
+- [ESlint](https://eslint.org/)
+- Airbnb's ESlint rules
+
+## Useful Links
+
+Resources useful for the completion of this project:
+
+- [Create React App](https://github.com/facebook/create-react-app) (React starter kit)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
